@@ -112,4 +112,4 @@ These results provide a comprehensive framework for understanding and predicting
 
 📘 Author: [Sid Richards]
 
-🔗 LinkedIn: [https://www.linkedin.com/in/sid-richards-21374b30b/]
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20" /> LinkedIn: [https://www.linkedin.com/in/sid-richards-21374b30b/]
