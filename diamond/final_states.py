@@ -35,7 +35,7 @@ def Final_state(v, u, r, s, gamma1, gamma2, S):
         phi = phinew
         time += dt
         h = H(h, phi, gamma1, gamma2, S, n_cells)
-        if time >= 500:  #Set a time limit.
+        if time >= 500:  #Set a time limit
             break
     while M >= 0:  #This then plots the 50 states leading up to the final.
         plt.plot(x, np.abs(phi) ** 2, c=colors[M], zorder = M - 49)

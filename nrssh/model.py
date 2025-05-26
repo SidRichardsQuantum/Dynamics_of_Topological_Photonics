@@ -33,4 +33,4 @@ def U(h, n_cells, dt):
 def H(h, phi, gamma1, gamma2, S, n_cells):
     for i in range(2 * n_cells):
         h[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
-    return H
+    return h
