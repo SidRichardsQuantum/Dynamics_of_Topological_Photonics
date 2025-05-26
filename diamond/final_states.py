@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from diamond.time_evolution import H, U
+from diamond.model import Hamiltonain
 
 
 n_cells = 33  #Number of cells
@@ -19,53 +21,27 @@ colormap = plt.colormaps.get_cmap('cool')  #Light blue to hot pink
 colors = colormap(normalized_values)
 
 
-#Hamiltonian for the Diamond model:
-def Hamiltonain(v, u, r, s):
-    H = np.zeros((N, N), dtype=complex)
-    for i in range(0, N - 1, 3):
-        H[i, i + 1] = u
-        H[i + 1, i] = u
-    for i in range(0, N - 2, 3):
-        H[i, i + 2] = s
-        H[i + 2, i] = s
-    for i in range(2, N - 1, 3):
-        H[i, i + 1] = r
-        H[i + 1, i] = r
-    for i in range(1, N - 2, 3):
-        H[i, i + 2] = v
-        H[i + 2, i] = v
-    return(H)
-
-
-#Write the onsite-potentials as imaginary gain and loss terms
-def H(phi, v, u, r, s, gamma1, gamma2, S):
-    H = Hamiltonain(v, u, r, s)
-    for i in range(0, N):
-        H[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
-    return H
-
-
-def U(phi, v, u, r, s, gamma1, gamma2, S):
-    U = np.dot((np.identity(N) - 1j * dt * H(phi, v, u, r, s, gamma1, gamma2, S) / 2), np.linalg.inv(np.identity(N) + 1j * dt * H(phi, v, u, r, s, gamma1, gamma2, S) / 2))
-    return U
-
-
 def Final_state(v, u, r, s, gamma1, gamma2, S):
     M = 49  #Colour-index for the plot
     time = 0  #Start time
     phi = np.zeros(N)
     phi[0] = 1  #Wavefunction starts entirely on the first site.
+    h = Hamiltonain(v, u, r, s, 0, n_cells)
+    for i in range(0, N):
+        h[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
     dif = tolerance + 1
     while dif >= tolerance:  #This is to evolve the system until a final state is reached.
-        phinew = np.dot(U(phi, v, u, r, s, gamma1, gamma2, S), phi)
+        phinew = np.dot(U(h, n_cells, dt), phi)
         dif = abs(sum(np.abs(phinew) ** 2) - sum(np.abs(phi) ** 2))
         phi = phinew
         time += dt
+        h = H(h, phi, gamma1, gamma2, S, n_cells)
         if time >= 500:  #Set a time limit.
             break
     while M >= 0:  #This then plots the 50 states leading up to the final.
         plt.plot(x, np.abs(phi) ** 2, c=colors[M], zorder = M - 49)
-        phi = np.dot(np.linalg.inv(U(phi, v, u, r, s, gamma1, gamma2, S)), phi)  #Regenerates the last states by evolving backwards using the inverse of U(t)
+        phi = np.dot(np.linalg.inv(U(h, n_cells, dt)), phi)  #Regenerates the last states by evolving backwards using the inverse of U(t)
+        h = H(h, phi, gamma1, gamma2, S, n_cells)
         M -= 1
     plt.xlabel('Site-Index')
     plt.ylabel('Intensity')

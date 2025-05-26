@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -21,14 +20,20 @@ def Hamiltonain(v, u, r, s, onsite, n_cells):
         H[i + 2, i] = v
     return(H)
 
-#n_cells is the number of unit cells in the lattice chain
-n_cells = 33
-evals = np.linalg.eigvalsh(Hamiltonain(0.2, 0.5, 0.9, 0.4, 1, n_cells))
-k = np.linspace(-np.pi, np.pi, 3 * n_cells + 1)  #Momentum("k")-space points
 
-plt.scatter(k, evals, c='red', marker=('.'))
-plt.scatter(-k, evals, c='red', marker=('.'))
-plt.title('Diamond Model eigenenergies')
-plt.xlabel('k-space')
-plt.ylabel('H Eigenvalues')
-plt.show()
+#Schrodinger eq: 1j * (d/dt)phi(t) = H(t)phi(t)
+#Time-derivative: (d/dt)phi(t) = (phi(t+dt) - phi(t)) / dt
+#Combine the above to write phi(t + dt) = U(t)phi(t), where U is of the 1st-order:
+#U(t) = 1 - 1j * dt * H(t)
+#This is NOT unitary even if H is Hermitian, because dt "isn't infinitesimal".
+#So after some illegal maths, we define the 2nd-order time-evolution operator:
+def U(h, n_cells, dt):
+    U = np.dot((np.identity(3 * n_cells + 1) - 1j * dt * h / 2), np.linalg.inv(np.identity(3 * n_cells + 1) + 1j * dt * h / 2))
+    return U
+
+
+#Write the onsite-potentials as imaginary gain and loss terms
+def H(h, phi, gamma1, gamma2, S, n_cells):
+    for i in range(0, n_cells):
+        h[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
+    return h

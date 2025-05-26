@@ -24,6 +24,6 @@ y = N // 2  #Remember that the localized edge-state eigenenergies were in the ce
 plt.plot(x, abs(evecs[:, y]) ** 2, c='red')  #See what happens if N is odd vs even!
 plt.xlabel('Site-index')
 plt.ylabel('Intensity')
-plt.title('H Eigenvectors')  #Eigenenergy plots
+plt.title('NRSSH Hamiltonian Eigenvectors')  #Eigenenergy plots
 plt.xlim(1, N)
 plt.show()
