@@ -23,8 +23,8 @@ Loss is given as a constant term $\gamma_2$. Similarly, there is a gain constant
 We combine the Schrödinger equation and definition of a time-derivative to write $\phi(t + dt)$ as a function of $H(t)$ and $\phi(t)$, such that $\phi(t + dt) = U(t)\phi(t)$.
 Here, $U(t)$ is the 1st-order time-evolution operator which evolves $\phi$ by time increment $dt$, and depends on time itself.
 However, this operator is NOT unitary, even if the Hamiltonian is Hermitian.
-Therefore, we upgrade $U(t)$ to the 2nd-order using some technical mathematics, assuring unitarity.
-(Note that if $dt$ was infinitesimally small, then there would be no system evolution - boring!)
+Therefore, we upgrade $U(t)$ to the 2nd-order to assure unitarity.
+(Note that if $dt$ was infinitesimally small, then there would be no system evolution.)
 The system is then evolved 50 times and the site-intensities are plotted to display how the wavefuntion evolves into the lattice.
 (50 because there are 50 colours in our colour-map.)
 
