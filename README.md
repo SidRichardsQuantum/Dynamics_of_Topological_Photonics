@@ -107,3 +107,9 @@ Simulations are ran over 100s of parameter combinations to create **phase diagra
 - Confirmed applicability to quantum walks, annealing and topological quantum computing scenarios
 
 These results provide a comprehensive framework for understanding and predicting the behavior of complex topological systems under competing gain and loss effects, with immediate applications in laser design and nonlinear optics research, and potentially in (topological) quantum computing and annealing.
+
+---
+
+📘 Author: [Sid Richards]
+
+🔗 LinkedIn: [https://www.linkedin.com/in/sid-richards-21374b30b/]
