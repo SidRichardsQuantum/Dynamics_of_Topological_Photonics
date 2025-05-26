@@ -32,8 +32,14 @@ def U(h, n_cells, dt):
     return U
 
 
-#Write the onsite-potentials as imaginary gain and loss terms
+#Write the onsite-potentials as imaginary gain and loss terms.
+#Nonlinear saturable gain on the A-sites.
+#Loss on the B- and C-sites.
 def H(h, phi, gamma1, gamma2, S, n_cells):
-    for i in range(0, n_cells):
-        h[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
+    for i in range(0, 3 * n_cells + 1, 3):
+        h[i, i] = 1j * gamma1 / (1 + S * np.abs(phi[i]) ** 2)
+    for i in range(1, 3 * n_cells + 1, 3):
+        h[i, i] = -1j * gamma2
+    for i in range(2, 3 * n_cells + 1, 3):
+        h[i, i] = -1j * gamma2
     return h

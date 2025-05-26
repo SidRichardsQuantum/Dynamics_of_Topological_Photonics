@@ -1,17 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from diamond.time_evolution import H, U
-from diamond.model import Hamiltonain
+from diamond.model import Hamiltonain, H, U
 
 
 n_cells = 33  #Number of cells
 N = 3 * n_cells + 1  #Number of sites. Has to be 1 modulo 3 for the Diamond model.
+x = np.linspace(1, N, N)  #Mimics real-space
+
 #We have to write a "small" time-interval.
 #The smaller dt is, the less the system will evolve.
 #Luckily, because we have set h_bar=1, dt is allowed to "look big" like 0.1 or 0.01:
 dt = 0.01
 
-x = np.linspace(1, N, N)  #Mimics real-space
 tolerance = 10 ** -3  #Small tolerance e.g: 10 ** -3
 
 #The next four lines are to colour-map the plot:
@@ -27,8 +27,7 @@ def Final_state(v, u, r, s, gamma1, gamma2, S):
     phi = np.zeros(N)
     phi[0] = 1  #Wavefunction starts entirely on the first site.
     h = Hamiltonain(v, u, r, s, 0, n_cells)
-    for i in range(0, N):
-        h[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
+    h = H(h, phi, gamma1, gamma2, S, n_cells)
     dif = tolerance + 1
     while dif >= tolerance:  #This is to evolve the system until a final state is reached.
         phinew = np.dot(U(h, n_cells, dt), phi)
@@ -46,8 +45,8 @@ def Final_state(v, u, r, s, gamma1, gamma2, S):
     plt.xlabel('Site-Index')
     plt.ylabel('Intensity')
     plt.title('Diamond Model Final States')
-    plt.xticks(range(0, N + 1, 5))
-    plt.xlim(1, N)
+    plt.xticks(range(0, 3 * n_cells + 2, 5))
+    plt.xlim(1, 3 * n_cells + 1)
     plt.gca().spines['top'].set_visible(False)
     legend_elements = list()
     legend_elements.append(plt.Line2D([0], [0], color='#FF00FF', label='Final time = '+str(round(time, 2))+''))

@@ -27,8 +27,7 @@ def Evolve(v, u, r, s, gamma1, gamma2, S, n_cells, dt):
     phi = np.zeros(N)
     phi[0] = 1  #Wavefunction starts entirely on the first site.
     h = Hamiltonain(v, u, r, s, 0, n_cells)
-    for i in range(0, N):
-        h[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
+    h = H(h, phi, gamma1, gamma2, S, n_cells)
     while time < T:
         plt.plot(x, np.abs(phi) ** 2, c=colors[M])  #Plots site-intensities in real-space
         phi = np.dot(U(h, n_cells, dt), phi)
@@ -46,5 +45,5 @@ def Evolve(v, u, r, s, gamma1, gamma2, S, n_cells, dt):
 
 #Gain coefficient gamma1 in the interval (0, 1]
 #Loss coefficient gamma2 in the interval (0, 1]
-#Saturation constant S
+#Saturation constant S >= 0
 Evolve(0.1, 0.4, 0.7, 0.6, 0.5, 0.8, 1, n_cells, dt)
