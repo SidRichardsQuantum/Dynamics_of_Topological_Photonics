@@ -43,7 +43,6 @@ def U(phi, r, u, v, gamma1, gamma2, S):
     return U
 
 
-#Function to apply U repeatedly to the wavefunction until time T:
 def Final_state(r, u, v, gamma1, gamma2, S):
     M = 49  #Colour-index for the plot
     time = 0  #Start time
