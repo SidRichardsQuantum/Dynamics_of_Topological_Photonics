@@ -1,12 +1,13 @@
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 n_cells = 33  #Number of cells
 N = 3 * n_cells + 1  #Number of sites. Has to be 1 mod 3 for the Diamond model
-k = np.linspace(-np.pi, np.pi, N)  #Momentum("k")-space points
+x = np.linspace(1, N, N)  #Mimics real-space (picture the sites in a straight line)
 
-
+from Diamond Model.py import Hamiltonian
+H = Hamiltonain(v, u, r, s, onsite)
 def Hamiltonain(v, u, r, s, onsite):
     H = np.zeros((N, N), dtype=complex)
     for i in range(N):
@@ -25,11 +26,12 @@ def Hamiltonain(v, u, r, s, onsite):
         H[i + 2, i] = v
     return(H)
 
-evals = np.linalg.eigvalsh(Hamiltonain(0.2, 0.5, 0.9, 0.4, 1))
+evals, evecs = np.linalg.eigh(Hamiltonain(0.2, 0.5, 0.9, 0.4, 1))
+y = N//3  #Look at 2*N//3 and N//2 too!
 
-plt.scatter(k, evals, c='red', marker=('.'))
-plt.scatter(-k, evals, c='red', marker=('.'))
-plt.title('Diamond Model eigenenergies')
-plt.xlabel('k-space')
-plt.ylabel('H Eigenvalues')
+plt.plot(x, abs(evecs[:, y]) ** 2, c='red')  #See what happens if N is odd vs even
+plt.xlabel('Site-index')
+plt.ylabel('Intensity')
+plt.title('H Eigenvectors')
+plt.xlim(1, N)
 plt.show()
