@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-N = 100  #Number of sites
+n_cells = 33  #Number of cells
+N = 3 * n_cells + 1  #Number of sites. Has to be 1 mod 3 for the Diamond model
 k = np.linspace(-np.pi, np.pi, N)  #Momentum("k")-space points
 
 

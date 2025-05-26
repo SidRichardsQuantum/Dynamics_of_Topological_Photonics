@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-N = 50  #Number of sites
+n_cells = 33  #Number of cells
+N = 3 * n_cells + 1  #Number of sites. Has to be 1 mod 3 for the Diamond model
 #We have to write a "small" time-interval.
 #The smaller dt is, the less the system will evolve.
 #Luckily, because we have set h_bar=1, dt is allowed to "look big" like 0.1 or 0.01:

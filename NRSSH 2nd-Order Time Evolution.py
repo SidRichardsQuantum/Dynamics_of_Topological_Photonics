@@ -67,5 +67,5 @@ def Evolve(r, u, s, gamma1, gamma2, S):
 
 #Gain coefficient in the interval (0, 1]
 #Loss coefficient in the interval (0, 1]
-#Saturation constant
+#Saturation constant S >= 0
 Evolve(0.1, 0.4, 0.7, 0.6, 0.5, 1)

@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-N = 100  #Number of sites
+n_cells = 33  #Number of cells
+N = 3 * n_cells + 1  #Number of sites. Has to be 1 mod 3 for the Diamond model
 x = np.linspace(1, N, N)  #Mimics real-space (picture the sites in a straight line)
 
 
