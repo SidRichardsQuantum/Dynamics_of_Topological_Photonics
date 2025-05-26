@@ -1,42 +1,43 @@
 # Dynamics of Topological Photonics with Nonlinear Saturable Gain and Loss
 
-This is a revamped version of my dissertation code at Lancaster University, where I worked with Dr Henning Schomerus on topological laser phases, edge modes and numerical simulations.
+This repository contains a revised version of the code from my dissertation at Lancaster University, developed under the supervision of Dr. Henning Schomerus. The project explores **topological laser phases, edge modes**, and **nonlinear dynamics** in photonic lattices.
 
-### In this repo, we study two main lattices:
-- The non-reciprocal Su–Schrieffer–Heeger (NRSSH) model with alternating inter and intra-cell hopping strengths, where the left and right intra-cell hoppings are unequal (non-reciprocity).
-- Diamond (Rhombic) model with three sites $A, B, C$ per cell.
-There are no hoppings between sites $B$ and $C$, hence this model may be referred to as the "ladder lattice" or something similar.
-Different combinations of which hoppings are equal form different "dimerizations" - leading to exotic laser phases.
+## 🧠 Overview
 
-First, we work on defining the Hamiltonians by writing its entries $[i, j]$ equal to the hopping strength from site $j$ to site $i$.
-The Hamiltonian's eigenvalues (eigenenergies) are then calculated and plotted against momentum($k$)-space, to see the lattice's band (gap) structure in the first Brillouin zone.
-We refer to the momentum as $k$, following the Planck relation $p = \hbar * k$ and setting Planck's reduced constant $\hbar = 1$.
-(This formulism will actually prove useful when considering an infinitesimal time interval $dt$.)
+We study two main lattice models:
 
-Next, we plot the same Hamiltonian's eigenvectors real-space, to visualize localized edge-states.
-These edge-modes are only present in topologically insulating phases, and are akin to eigenenergies within the band gap.
+1. **Non-reciprocal SSH (NRSSH) Model**  
+   A variation of the Su–Schrieffer–Heeger model with unequal (non-reciprocal) intra-cell hopping in opposite directions.
 
-We then toggle the Hamiltonian's onsite energies to become imaginary terms corresponding to gain and loss.
-The gain term has a saturation $S$ that limits gain nonlinearly - depending on the site's intensity.
-Loss is given as a constant term $\gamma_2$. Similarly, there is a gain constant $\gamma_1$.
+2. **Diamond (Rhombic) Model**  
+   A lattice with three sites per unit cell (A, B, C). Hoppings occur between A-B and A-C but not between B and C. Different hopping configurations lead to various "dimerizations" and exotic laser phases.
 
-We combine the Schrödinger equation and definition of a time-derivative to write $\phi(t + dt)$ as a function of $H(t)$ and $\phi(t)$, such that $\phi(t + dt) = U(t)\phi(t)$.
-Here, $U(t)$ is the 1st-order time-evolution operator which evolves $\phi$ by time increment $dt$, and depends on time itself.
-However, this operator is NOT unitary, even if the Hamiltonian is Hermitian.
-Therefore, we upgrade $U(t)$ to the 2nd-order to assure unitarity.
-(Note that if $dt$ was infinitesimally small, then there would be no system evolution.)
-The system is then evolved 50 times and the site-intensities are plotted to display how the wavefuntion evolves into the lattice.
-(50 because there are 50 colours in our colour-map.)
+## 🔬 Methodology
 
-The previous step is then modified such that we see the final iterations before the state reaches a final state.
-A final state is defined such that the difference in successive (time $dt$ apart) total intensities falls below a specific 'tolerance' threshold.
-Tolerance and increment $dt$ have a close relationship in terms of runtime - for which we discuss some work-arounds.
-Times to reach final states are different depending on gain, loss, saturation and hopping strengths.
-Therefore, this is why it's possible to create temporal phase diagrams of $\gamma_1$ against $\gamma_2$.
+### 1. **Hamiltonian Construction**
+Hamiltonians are defined by populating the matrix entry `[i, j]` with the hopping strength from site `j` to `i`.  
+We compute and visualize:
+- **Band structure** in momentum ($k$)-space (First Brillouin zone)
+- **Edge states** in real space (topologically protected modes)
 
-Finally, the above code is ran over 100s of combinations of gain vs loss, to form entire phase diagrams.
-In these diagrams, with help of the file for plotting intensities in real space, we will be able to analse properties of different laser phases.
-These phases govern whether edge modes can exist, chaotic lasing behaviour, stability, lossy phases, and apparent blended/combined phases of the forementioned.
+### 2. **Inclusion of Gain and Loss**
+- Introduced as imaginary onsite potential terms.
+- Gain features **nonlinear saturation** controlled by intensity and a saturation parameter `S`.
+- `γ₁` (gain) and `γ₂` (loss) are tunable parameters.
 
+### 3. **Time Evolution**
+We evolve the system:
+- Use a **2nd-order time evolution operator** `U(t)` to generate $\phi(t + dt)$ from $\phi(t)$.
+- Evolution is repeated for 50 steps (the number of colours in the colour-map).
 
-## Main results:
+### 4. **Steady-State Detection**
+The system is evolved until the change in total intensity between time steps falls below a defined **tolerance**.
+The site intensities moments before reaching this final state are visualized.
+
+### 5. **Phase Diagram Generation**
+Simulations are run over 100s of parameter combinations to create **phase diagrams**. These help analyze:
+- Existence of edge modes
+- Stability vs chaos
+- Loss-dominated and hybrid laser phases
+
+## 📈 Main Results
