@@ -1,49 +1,158 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh import Hamiltonain, H, U
+from src.models.nrssh import HamiltonianSystem
 
 
-n_cells = 40  #Number of cells
-N = 2 * n_cells  #Number of sites for the NRSSH model
-x = np.linspace(1, N, N)  #Mimics real-space
+def evolve_and_plot(system, dt, total_time, plot_interval=None):
+    """
+    Evolve the system and plot the wavefunction intensity over time.
 
-#We have to write a "small" time-interval.
-#The smaller dt is, the less the system will evolve.
-#Luckily, because we have set h_bar=1, dt is allowed to "look big" like 0.1 or 0.01:
-dt = 0.1
-T = 49 * dt  #The time for which the evolution stops at (there are only 50 colours available)
+    Parameters:
+    -----------
+    system : HamiltonianSystem
+        The system to evolve
+    dt : float
+        Time step
+    total_time : float
+        Total evolution time
+    plot_interval : int, optional
+        Plot every nth step (if None, plots based on available colors)
+    """
+    N = system.N
+    x = np.linspace(1, N, N)  # Mimics real-space
 
-#The next four lines are to colour-map the plot
-values = np.linspace(1, 50)  #There are 50 colours in the colour-map
-normalized_values = values / 50
-colormap = plt.colormaps.get_cmap('cool')  #Light blue to hot pink
-colors = colormap(normalized_values)
+    # Color mapping setup
+    n_colors = 50
+    values = np.linspace(1, n_colors)
+    normalized_values = values / n_colors
+    colormap = plt.colormaps.get_cmap('cool')  # Light blue to hot pink
+    colors = colormap(normalized_values)
 
+    # Initialize wavefunction - starts entirely on the first site
+    phi = np.zeros(N, dtype=complex)
+    phi[0] = 1.0
 
-#Function to apply U repeatedly to the wavefunction until time T:
-def Evolve(r, u, v, gamma1, gamma2, S, n_cells, dt):
-    M = 0  #Colour-index for the plot
-    time = 0  #Start time
-    phi = np.zeros(N)
-    phi[0] = 1  #Wavefunction starts entirely on the first site.
-    h = Hamiltonain(r, u, v, 0, n_cells)
-    h = H(h, phi, gamma1, gamma2, S, n_cells)
-    while time < T:
-        plt.plot(x, np.abs(phi) ** 2, c=colors[M])  #Plots site-intensities in real-space
-        phi = np.dot(U(h, n_cells, dt), phi)
-        time += dt
-        M += 1
-        h = H(h, phi, gamma1, gamma2, S, n_cells)
+    # Time evolution parameters
+    n_steps = int(total_time / dt)
+    if plot_interval is None:
+        plot_interval = max(1, n_steps // n_colors)
+
+    time = 0.0
+    color_index = 0
+
+    plt.figure(figsize=(12, 8))
+
+    for step in range(n_steps + 1):
+        # Plot at specified intervals
+        if step % plot_interval == 0 and color_index < len(colors):
+            plt.plot(x, np.abs(phi) ** 2, c=colors[color_index], alpha=0.8)
+            color_index += 1
+
+        # Evolve the system (skip on last step)
+        if step < n_steps:
+            # Get current Hamiltonian with nonlinear terms
+            H = system.get_hamiltonian(phi, onsite=0.0)
+
+            # Get time evolution operator
+            U_op = system.time_evolution_operator(H, dt)
+
+            # Evolve the wavefunction
+            phi = np.dot(U_op, phi)
+            time += dt
+
+    # Formatting and legend
     plt.xlabel('Site-Index')
     plt.ylabel('Intensity')
-    legend_elements = list()
-    legend_elements.append(plt.Line2D([0], [0], color='#00FFFF', label='Start'))
-    legend_elements.append(plt.Line2D([0], [0], color='#FF00FF', label='Finish'))
+    legend_elements = [
+        plt.Line2D([0], [0], color='#00FFFF', label='Start = '+str(round(time - n_steps * dt, 2))+''),
+        plt.Line2D([0], [0], color='#FF00FF', label='Finish = '+str(round(time, 2))+'')
+    ]
     plt.legend(handles=legend_elements)
     plt.title('2nd-Order Evolution of the NRSSH Model')
+    plt.grid(True, alpha=0.3)
     plt.show()
 
-#Gain coefficient gamma1 in the interval (0, 1]
-#Loss coefficient gamma2 in the interval (0, 1]
-#Saturation constant S >= 0
-Evolve(0.1, 0.4, 0.7, 0.6, 0.5, 1, n_cells, dt)
+    return phi  # Return final wavefunction
+
+
+def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0.5, S=1.0,
+                           dt=0.1, total_time=None, verbose=True):
+    """
+    Plot an example time evolution of the NRSSH system.
+
+    Parameters:
+    -----------
+    n_cells : int
+        Number of unit cells
+    v, u, r : float
+        Hopping parameters
+    gamma1, gamma2, S : float
+        Gain/loss parameters
+    dt : float
+        Time step
+    total_time : float, optional
+        Total evolution time (default: 49*dt for 50 colors)
+    verbose : bool
+        Whether to print system information
+
+    Returns:
+    --------
+    final_phi : ndarray
+        Final wavefunction after evolution
+    system : HamiltonianSystem
+        The system object used
+    """
+    # Create the system
+    system = HamiltonianSystem(
+        n_cells=n_cells,
+        v=v,  # Non-reciprocal forward hopping
+        u=u,  # Non-reciprocal backward hopping
+        r=r,  # Reciprocal inter-cell hopping
+        gamma1=gamma1,  # Gain coefficient (0, 1]
+        gamma2=gamma2,  # Loss coefficient (0, 1]
+        S=S  # Saturation constant (>= 0)
+    )
+
+    # Time evolution parameters
+    if total_time is None:
+        total_time = 49 * dt  # Evolution stops here (50 colors available)
+
+    if verbose:
+        # Print system information
+        print(f"System parameters:")
+        print(f"  n_cells: {system.n_cells}")
+        print(f"  Total sites: {system.N}")
+        print(f"  v (forward hopping): {system.v}")
+        print(f"  u (backward hopping): {system.u}")
+        print(f"  r (inter-cell hopping): {system.r}")
+        print(f"  gamma1 (gain): {system.gamma1}")
+        print(f"  gamma2 (loss): {system.gamma2}")
+        print(f"  S (saturation): {system.S}")
+        print(f"\nEvolution parameters:")
+        print(f"  dt: {dt}")
+        print(f"  Total time: {total_time}")
+        print(f"  Number of steps: {int(total_time / dt)}")
+
+    # Run the evolution and plotting
+    final_phi = evolve_and_plot(system, dt, total_time)
+
+    if verbose:
+        # Print final state information
+        final_norm = np.linalg.norm(final_phi)
+        print(f"\nFinal state:")
+        print(f"  Norm: {final_norm:.6f}")
+        print(f"  Max intensity: {np.max(np.abs(final_phi) ** 2):.6f}")
+        print(f"  Site with max intensity: {np.argmax(np.abs(final_phi) ** 2) + 1}")
+
+    return final_phi, system
+
+
+# # Example usage when run directly
+# if __name__ == "__main__":
+#     # Run default example
+#     final_phi, system = plot_example_evolution()
+#
+#     # You can also run with custom parameters:
+#     # final_phi, system = plot_example_evolution(
+#     #     n_cells=20, r=0.2, u=0.3, gamma1=0.8, verbose=False
+#     # )

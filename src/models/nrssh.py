@@ -1,36 +1,229 @@
 import numpy as np
 
 
-#For non-reciprocal intra-cell hopping strengths r and u,
-#and reciprocal intrer-cell hoppings s:
-def Hamiltonain(r, u, v, onsite, n_cells):
-    N = 2 * n_cells
-    H = np.zeros((N, N), dtype=complex)
-    for i in range(N):
-        H[i, i] = onsite
-    for i in range(0, N - 1, 2):
-        H[i, i + 1] = r
-        H[i + 1, i] = u
-    for i in range(1, N - 1, 2):
-        H[i, i + 1] = v
-        H[i + 1, i] = v
-    return(H)
+class HamiltonianSystem:
+    """
+    A class for simulating a Hamiltonian for the NRSSH model
+    with nonlinear saturable gain and constant loss dynamics.
+    """
+
+    def __init__(self, n_cells, v=1.0, u=1.0, r=1.0, gamma1=1.0, gamma2=0.5, S=1.0):
+        """
+        Initialize the Hamiltonian system.
+
+        Parameters:
+        -----------
+        n_cells : int
+            Number of unit cells in the system
+        v : float
+            Non-reciprocal intra-cell hopping strength (forward)
+        u : float
+            Non-reciprocal intra-cell hopping strength (backward)
+        r : float
+            Reciprocal inter-cell hopping strength
+        gamma1 : float
+            Gain parameter
+        gamma2 : float
+            Loss parameter
+        S : float
+            Saturation parameter for nonlinear gain
+        """
+        self.n_cells = n_cells
+        self.N = 2 * n_cells  # Total number of sites
+        self.r = r
+        self.u = u
+        self.v = v
+        self.gamma1 = gamma1
+        self.gamma2 = gamma2
+        self.S = S
+
+        # Initialize base Hamiltonian
+        self.H_base = self._build_base_hamiltonian()
+
+    def _build_base_hamiltonian(self):
+        """
+        Build the base Hamiltonian with hopping terms (without onsite potentials).
+        """
+        H = np.zeros((self.N, self.N), dtype=complex)
+
+        # Intra-cell hopping (non-reciprocal)
+        for i in range(0, self.N - 1, 2):
+            H[i, i + 1] = self.v
+            H[i + 1, i] = self.u
+
+        # Inter-cell hopping (reciprocal)
+        for i in range(1, self.N - 1, 2):
+            H[i, i + 1] = self.r
+            H[i + 1, i] = self.r
+
+        return H
+
+    def get_hamiltonian(self, phi=None, onsite=0.0):
+        """
+        Get the full Hamiltonian including onsite terms.
+
+        Parameters:
+        -----------
+        phi : array_like, optional
+            Wave function for nonlinear onsite potentials
+        onsite : float
+            Linear onsite potential (default: 0.0)
+
+        Returns:
+        --------
+        H : ndarray
+            Full Hamiltonian matrix
+        """
+        H = self.H_base.copy()
+
+        # Add linear onsite terms
+        for i in range(self.N):
+            H[i, i] += onsite
+
+        # Add nonlinear gain/loss terms if phi is provided
+        if phi is not None:
+            H = self._add_nonlinear_terms(H, phi)
+
+        return H
+
+    def _add_nonlinear_terms(self, H, phi):
+        """
+        Add nonlinear gain and loss terms to the Hamiltonian.
+
+        Parameters:
+        -----------
+        H : ndarray
+            Hamiltonian matrix to modify
+        phi : array_like
+            Wave function
+
+        Returns:
+        --------
+        H : ndarray
+            Modified Hamiltonian with nonlinear terms
+        """
+        for i in range(self.N):
+            intensity = np.abs(phi[i]) ** 2
+            gain_loss = 1j * (self.gamma1 / (1 + self.S * intensity) - self.gamma2)
+            H[i, i] += gain_loss
+
+        return H
+
+    def time_evolution_operator(self, H, dt):
+        """
+        Calculate the second-order time evolution operator.
+
+        U(t) = (I - iH*dt/2) * (I + iH*dt/2)^(-1)
+
+        Parameters:
+        -----------
+        H : ndarray
+            Hamiltonian matrix
+        dt : float
+            Time step
+
+        Returns:
+        --------
+        U : ndarray
+            Time evolution operator
+        """
+        I = np.identity(self.N)
+        U = np.dot(I - 1j * dt * H / 2, np.linalg.inv(I + 1j * dt * H / 2))
+        return U
+
+    def evolve(self, phi_initial, dt, n_steps, onsite=0.0):
+        """
+        Time-evolve the system.
+
+        Parameters:
+        -----------
+        phi_initial : array_like
+            Initial wave function
+        dt : float
+            Time step
+        n_steps : int
+            Number of time steps
+        onsite : float
+            Linear onsite potential
+
+        Returns:
+        --------
+        phi_history : ndarray
+            Array of wave functions at each time step
+        times : ndarray
+            Array of time points
+        """
+        phi_history = np.zeros((n_steps + 1, self.N), dtype=complex)
+        phi_history[0] = phi_initial
+        phi = phi_initial.copy()
+
+        times = np.linspace(0, n_steps * dt, n_steps + 1)
+
+        for step in range(n_steps):
+            # Get Hamiltonian with current wave function
+            H = self.get_hamiltonian(phi, onsite)
+
+            # Calculate time evolution operator
+            U = self.time_evolution_operator(H, dt)
+
+            # Evolve the wave function
+            phi = np.dot(U, phi)
+            phi_history[step + 1] = phi
+
+        return phi_history, times
+
+    def update_parameters(self, **kwargs):
+        """
+        Update system parameters.
+
+        Parameters:
+        -----------
+        **kwargs : dict
+            Parameter updates (v, u, r, gamma1, gamma2, S)
+        """
+        for key, value in kwargs.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+
+        # Rebuild base Hamiltonian if hopping parameters changed
+        if any(param in kwargs for param in ['v', 'u', 'r']):
+            self.H_base = self._build_base_hamiltonian()
 
 
-#Schrodinger eq: 1j * (d/dt)phi(t) = H(t)phi(t)
-#Time-derivative: (d/dt)phi(t) = (phi(t+dt) - phi(t)) / dt
-#Combine the above to write phi(t + dt) = U(t)phi(t), where U is of the 1st-order:
-#U(t) = 1 - 1j * dt * H(t)
-#This is NOT unitary even if H is Hermitian, because dt "isn't infinitesimal".
-#So after some illegal maths, we define the 2nd-order time-evolution operator:
-def U(h, n_cells, dt):
-    U = np.dot((np.identity(2 * n_cells) - 1j * dt * h / 2), np.linalg.inv(np.identity(2 * n_cells) + 1j * dt * h / 2))
-    return U
 
-
-#Write the onsite-potentials as imaginary gain and loss terms.
-#Loss and nonlinear saturable gain on every site.
-def H(h, phi, gamma1, gamma2, S, n_cells):
-    for i in range(2 * n_cells):
-        h[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
-    return h
+# import numpy as np
+#
+#
+# #For non-reciprocal intra-cell hopping strengths r and u,
+# #and reciprocal intrer-cell hoppings s:
+# def Hamiltonain(r, u, v, onsite, n_cells):
+#     N = 2 * n_cells
+#     H = np.zeros((N, N), dtype=complex)
+#     for i in range(N):
+#         H[i, i] = onsite
+#     for i in range(0, N - 1, 2):
+#         H[i, i + 1] = r
+#         H[i + 1, i] = u
+#     for i in range(1, N - 1, 2):
+#         H[i, i + 1] = v
+#         H[i + 1, i] = v
+#     return(H)
+#
+#
+# #Schrodinger eq: 1j * (d/dt)phi(t) = H(t)phi(t)
+# #Time-derivative: (d/dt)phi(t) = (phi(t+dt) - phi(t)) / dt
+# #Combine the above to write phi(t + dt) = U(t)phi(t), where U is of the 1st-order:
+# #U(t) = 1 - 1j * dt * H(t)
+# #This is NOT unitary even if H is Hermitian, because dt "isn't infinitesimal".
+# #So after some illegal maths, we define the 2nd-order time-evolution operator:
+# def U(h, n_cells, dt):
+#     U = np.dot((np.identity(2 * n_cells) - 1j * dt * h / 2), np.linalg.inv(np.identity(2 * n_cells) + 1j * dt * h / 2))
+#     return U
+#
+#
+# #Write the onsite-potentials as imaginary gain and loss terms.
+# #Loss and nonlinear saturable gain on every site.
+# def H(h, phi, gamma1, gamma2, S, n_cells):
+#     for i in range(2 * n_cells):
+#         h[i, i] = 1j * (gamma1 / (1 + S * np.abs(phi[i]) ** 2) - gamma2)
+#     return h
