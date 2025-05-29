@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from nrssh.model import Hamiltonain, H, U
+from src.models.nrssh import Hamiltonain, H, U
 
 
 n_cells = 40  #Number of cells
@@ -9,9 +9,9 @@ N = 2 * n_cells  #Number of sites. Has to be 1 modulo 3 for the Diamond model.
 #We have to write a "small" time-interval.
 #The smaller dt is, the less the system will evolve.
 #Luckily, because we have set h_bar=1, dt is allowed to "look big" like 0.1 or 0.01:
-dt = 0.01
+dt = 0.015
 
-tolerance = 10 ** -3  #Small tolerance e.g: 10 ** -3
+tolerance = 10 ** -4  #Small tolerance e.g: 10 ** -3
 
 #The next four lines are to colour-map the plot:
 values = np.linspace(1, 50)  #There are 50 colours in the colour-map
@@ -73,4 +73,4 @@ def phase_diagram(r, u, v, S, points):
     plt.ylim(0, 1)
     plt.show()
 
-phase_diagram(0.3, 0.6, 0.9, 1, 10)
+phase_diagram(0.5, 0.5, 0.5, 5, 10)

@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from nrssh.model import Hamiltonain
+from src.models.nrssh import Hamiltonain
 
 
 n_cells = 50

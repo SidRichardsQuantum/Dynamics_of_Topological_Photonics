@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from diamond.model import Hamiltonain, H, U
+from src.models.nrssh import Hamiltonain, H, U
 
 
-n_cells = 33  #Number of cells
-N = 3 * n_cells + 1  #Number of sites. Has to be 1 modulo 3 for the Diamond model.
+n_cells = 40  #Number of cells
+N = 2 * n_cells  #Number of sites for the NRSSH model.
 x = np.linspace(1, N, N)  #Mimics real-space
 
 #We have to write a "small" time-interval.
@@ -21,12 +21,12 @@ colormap = plt.colormaps.get_cmap('cool')  #Light blue to hot pink
 colors = colormap(normalized_values)
 
 
-def Final_state(v, u, r, s, gamma1, gamma2, S):
+def Final_state(r, u, v, gamma1, gamma2, S):
     M = 49  #Colour-index for the plot
     time = 0  #Start time
     phi = np.zeros(N)
     phi[0] = 1  #Wavefunction starts entirely on the first site.
-    h = Hamiltonain(v, u, r, s, 0, n_cells)
+    h = Hamiltonain(r, u, v, 0, n_cells)
     h = H(h, phi, gamma1, gamma2, S, n_cells)
     dif = tolerance + 1
     while dif >= tolerance:  #This is to evolve the system until a final state is reached.
@@ -44,9 +44,9 @@ def Final_state(v, u, r, s, gamma1, gamma2, S):
         M -= 1
     plt.xlabel('Site-Index')
     plt.ylabel('Intensity')
-    plt.title('Diamond Model Final States')
-    plt.xticks(range(0, 3 * n_cells + 2, 5))
-    plt.xlim(1, 3 * n_cells + 1)
+    plt.title('NRSSH Model Final States')
+    plt.xticks(range(0, N + 1, 5))
+    plt.xlim(1, N)
     plt.gca().spines['top'].set_visible(False)
     legend_elements = list()
     legend_elements.append(plt.Line2D([0], [0], color='#FF00FF', label='Final time = '+str(round(time, 2))+''))
@@ -57,4 +57,4 @@ def Final_state(v, u, r, s, gamma1, gamma2, S):
 #Gain coefficient in the interval (0, 1]
 #Loss coefficient in the interval (0, 1]
 #Saturation constant S >= 0
-Final_state(0.1, 0.4, 0.7, 0.9, 0.6, 0.5, 1)
+Final_state(0.4, 0.7, 0.9, 0.6, 0.5, 1)
