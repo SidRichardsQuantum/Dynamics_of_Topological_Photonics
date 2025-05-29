@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh import HamiltonianSystem
+from src.models.nrssh_lattice import HamiltonianSystem
 
 
 # Create the system with the same parameters

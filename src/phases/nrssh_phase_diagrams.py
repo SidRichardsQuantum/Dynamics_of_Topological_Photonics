@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh import HamiltonianSystem
+from src.models.nrssh_lattice import HamiltonianSystem
 
 
 def find_convergence_time(system, dt=0.015, tolerance=1e-4, max_time=10, verbose=False):
@@ -266,14 +266,3 @@ def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, points=10, verbose=Tr
     return create_phase_diagram(
         v=v, u=u, r=r, S=S, points=points, verbose=verbose
     )
-
-
-# # Example usage when run directly
-# if __name__ == "__main__":
-#     # Run default example (matches your original parameters)
-#     gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram()
-#
-#     # You can also run with custom parameters:
-#     # gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(
-#     #     v=0.9, u=0.7, r=0.4, S=1.0, points=20, verbose=True
-#     # )

@@ -1,5 +1,5 @@
 import numpy as np
-from .nrssh import LatticeModel
+from .nrssh_lattice import LatticeModel
 
 
 class DiamondModel(LatticeModel):

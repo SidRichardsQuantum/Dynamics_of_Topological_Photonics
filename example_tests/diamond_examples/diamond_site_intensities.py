@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.diamond import Hamiltonain
+from src.models.diamond_lattice import Hamiltonain
 
 
 n_cells = 33

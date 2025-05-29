@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh import HamiltonianSystem
+from src.models.nrssh_lattice import HamiltonianSystem
 
 
 def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=500, n_backtrack=50,
