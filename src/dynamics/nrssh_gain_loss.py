@@ -141,8 +141,8 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=500, n_b
     return final_phi, final_time, converged
 
 
-def plot_example_final_state(n_cells=40, v=0.4, u=0.7, r=0.9, gamma1=0.6, gamma2=0.5, S=1.0,
-                             dt=0.01, tolerance=1e-3, max_time=500, verbose=True):
+def plot_example_final_state(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0.5, S=1.0,
+                             dt=0.01, tolerance=1e-4, max_time=500, verbose=True):
     """
     Plot an example final state evolution of the NRSSH system.
 
@@ -208,14 +208,3 @@ def plot_example_final_state(n_cells=40, v=0.4, u=0.7, r=0.9, gamma1=0.6, gamma2
         print(f"  Site with max intensity: {np.argmax(np.abs(final_phi) ** 2) + 1}")
 
     return final_phi, final_time, system
-
-
-# # Example usage when run directly
-# if __name__ == "__main__":
-#     # Run default example (matches your original parameters)
-#     final_phi, final_time, system = plot_example_final_state()
-#
-#     # You can also run with custom parameters:
-#     # final_phi, final_time, system = plot_example_final_state(
-#     #     n_cells=20, v=0.2, gamma1=0.8, tolerance=1e-4, verbose=False
-#     # )

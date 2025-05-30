@@ -6,9 +6,9 @@ from src.models.nrssh_lattice import HamiltonianSystem
 n_cells = 50
 system = HamiltonianSystem(
     n_cells=n_cells,
-    v=0.1,      # Previously first argument
-    u=0.5,      # Previously second argument
-    r=0.9,      # Previously third argument
+    v=0.1,
+    u=0.5,
+    r=0.9,
     gamma1=0.0, # No gain
     gamma2=0.0  # No loss
 )
@@ -22,7 +22,7 @@ evals, evecs = np.linalg.eigh(H)
 # Create real-space array (mimics sites in a straight line)
 x = np.linspace(1, 2 * n_cells, 2 * n_cells)
 
-# Index for the localized edge-state (center of the bands)
+# Index for the localized edge-state - happens to be indexed halfway
 y = n_cells
 
 # Plot the eigenvector intensity

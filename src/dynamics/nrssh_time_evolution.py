@@ -145,14 +145,3 @@ def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0
         print(f"  Site with max intensity: {np.argmax(np.abs(final_phi) ** 2) + 1}")
 
     return final_phi, system
-
-
-# # Example usage when run directly
-# if __name__ == "__main__":
-#     # Run default example
-#     final_phi, system = plot_example_evolution()
-#
-#     # You can also run with custom parameters:
-#     # final_phi, system = plot_example_evolution(
-#     #     n_cells=20, r=0.2, u=0.3, gamma1=0.8, verbose=False
-#     # )
