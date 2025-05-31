@@ -1,5 +1,5 @@
 import numpy as np
-
+#
 
 class HamiltonianSystem:
     """
@@ -130,61 +130,3 @@ class HamiltonianSystem:
         I = np.identity(self.N)
         U = np.dot(I - 1j * dt * H / 2, np.linalg.inv(I + 1j * dt * H / 2))
         return U
-
-    # def evolve(self, phi_initial, dt, n_steps, onsite=0.0):
-    #     """
-    #     Time-evolve the system.
-    #
-    #     Parameters:
-    #     -----------
-    #     phi_initial : array_like
-    #         Initial wave function
-    #     dt : float
-    #         Time step
-    #     n_steps : int
-    #         Number of time steps
-    #     onsite : float
-    #         Linear onsite potential
-    #
-    #     Returns:
-    #     --------
-    #     phi_history : ndarray
-    #         Array of wave functions at each time step
-    #     times : ndarray
-    #         Array of time points
-    #     """
-    #     phi_history = np.zeros((n_steps + 1, self.N), dtype=complex)
-    #     phi_history[0] = phi_initial
-    #     phi = phi_initial.copy()
-    #
-    #     times = np.linspace(0, n_steps * dt, n_steps + 1)
-    #
-    #     for step in range(n_steps):
-    #         # Get Hamiltonian with current wave function
-    #         H = self.get_hamiltonian(phi, onsite)
-    #
-    #         # Calculate time evolution operator
-    #         U = self.time_evolution_operator(H, dt)
-    #
-    #         # Evolve the wave function
-    #         phi = np.dot(U, phi)
-    #         phi_history[step + 1] = phi
-    #
-    #     return phi_history, times
-    #
-    # def update_parameters(self, **kwargs):
-    #     """
-    #     Update system parameters.
-    #
-    #     Parameters:
-    #     -----------
-    #     **kwargs : dict
-    #         Parameter updates (v, u, r, gamma1, gamma2, S)
-    #     """
-    #     for key, value in kwargs.items():
-    #         if hasattr(self, key):
-    #             setattr(self, key, value)
-    #
-    #     # Rebuild base Hamiltonian if hopping parameters changed
-    #     if any(param in kwargs for param in ['v', 'u', 'r']):
-    #         self.H_base = self._build_base_hamiltonian()

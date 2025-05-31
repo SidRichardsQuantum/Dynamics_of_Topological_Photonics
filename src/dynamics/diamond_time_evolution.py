@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.diamond_lattice import DiamondLatticeSystem
-
+#
 
 def evolve_and_plot(system, dt, total_time, plot_interval=None):
     """

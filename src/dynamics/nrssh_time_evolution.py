@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import HamiltonianSystem
-
+#
 
 def evolve_and_plot(system, dt, total_time, plot_interval=None):
     """
