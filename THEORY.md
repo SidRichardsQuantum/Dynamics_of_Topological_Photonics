@@ -102,6 +102,15 @@ $U(t) = (I - idtH / 2) / (I + idtH / 2)$.
 
 A final state is determined by when the difference in total intensities between successive time-increments dt drops below a certain "tolerance" parameter.
 
+## Eigenvalues and Eigenvectors
+
+Eigenvalues of the Hamiltonian (eigenenergies), when plotted in $k$-space, form the band structure for the lattice.
+In some phases, there is a gap in the bands such that no particles can easily jump across.
+Insulators have large band gaps that electrons can't easily jump across.
+Metals have no band gap, so electrons can freely move between the eigenenergy states.
+
+Other phases host localised edge states, which have eigenenergies within the band gap; where the ends of the lattice are highly conducting and the bulk is insulating - forming a **topological insulator**.
+
 ## Phase Classification
 
 **Lossy Phase**:
@@ -147,3 +156,7 @@ A final state is determined by when the difference in total intensities between 
 **Decoherence Modeling**: Loss parameters represent environmental noise, decoherence and errors.
 
 ---
+
+📘 Author: [Sid Richards]
+
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20" /> LinkedIn: [https://www.linkedin.com/in/sid-richards-21374b30b/]
