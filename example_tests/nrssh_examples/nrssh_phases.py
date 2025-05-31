@@ -1,5 +1,5 @@
 from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
-#
+
 
 if __name__ == "__main__":
     # Run default example (matches your original parameters)

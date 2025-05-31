@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import HamiltonianSystem
-#
+
 
 def find_convergence_time(system, dt=0.015, tolerance=1e-4, max_time=10, verbose=False):
     """
