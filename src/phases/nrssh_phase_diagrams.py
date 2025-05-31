@@ -239,7 +239,7 @@ def _plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged
     plt.show()
 
 
-def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, points=10, verbose=True):
+def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=1.0, points=10, verbose=True):
     """
     Plot an example phase diagram with default parameters.
 

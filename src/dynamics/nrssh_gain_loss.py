@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import HamiltonianSystem
 
 
-def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=500, n_backtrack=50,
+def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_backtrack=50,
                               plot=True, verbose=True):
     """
     Find the final state of the system and plot the evolution leading to it.
@@ -142,7 +142,7 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=500, n_b
 
 
 def plot_example_final_state(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0.5, S=1.0,
-                             dt=0.01, tolerance=1e-4, max_time=500, verbose=True):
+                             dt=0.01, tolerance=1e-4, max_time=50, verbose=True):
     """
     Plot an example final state evolution of the NRSSH system.
 

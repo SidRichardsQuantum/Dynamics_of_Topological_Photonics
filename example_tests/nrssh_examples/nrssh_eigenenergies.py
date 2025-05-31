@@ -14,7 +14,7 @@ system = HamiltonianSystem(
     gamma2=0.0  # No loss (was handled by onsite=1 previously)
 )
 
-# Get the Hamiltonian with onsite energy = 1 (no nonlinear effects)
+# Get the Hamiltonian with real onsite energy = 1 (no nonlinear effects)
 H = system.get_hamiltonian(phi=None, onsite=1.0)
 
 # Calculate eigenvalues
@@ -26,18 +26,9 @@ k = np.linspace(-np.pi, np.pi, 2 * n_cells)
 # Plot the results
 plt.figure(figsize=(8, 6))
 plt.scatter(k, evals, c='red', marker='.')
-plt.scatter(-k, evals, c='red', marker='.')
+plt.scatter(-k, evals, c='blue', marker='.')  # Flip the k-values to simulate the true band-structure
 plt.title('NRSSH Model eigenenergies')
 plt.xlabel('k-space')
 plt.ylabel('H Eigenvalues')
 plt.grid(True, alpha=0.3)
 plt.show()
-
-# Optional: Print some information about the system
-print(f"System parameters:")
-print(f"  n_cells: {system.n_cells}")
-print(f"  r (forward hopping): {system.r}")
-print(f"  u (backward hopping): {system.u}")
-print(f"  v (inter-cell hopping): {system.v}")
-print(f"  Total system size: {system.N} sites")
-print(f"  Eigenvalue range: [{np.min(evals):.3f}, {np.max(evals):.3f}]")
