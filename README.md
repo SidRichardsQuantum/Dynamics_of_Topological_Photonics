@@ -4,7 +4,7 @@ This repository contains a revised version of the code from my dissertation at L
 
 ## Table of Contents
 - [Quick Start](#quick-start)⚡
-- [Why This Work Matters](#why-this-work-matters)
+- [Why This Matters](#why-this-matters)
 - [Overview](#overview)🧠
 - [Methodology](#methodology)🔬
 - [Project Structure](#project-structure)
@@ -12,26 +12,28 @@ This repository contains a revised version of the code from my dissertation at L
 
 ## Quick Start
 
+1. **Clone the Repository**
 ```bash
-# Clone the repository
 git clone https://github.com/SidRichardsQuantum/Dynamics_of_Topological_Photonics.git
 cd Dynamics_of_Topological_Photonics
+```
 
-# Install dependencies
+2. **Install dependencies**
+```bash
 pip install -r requirements.txt
+```
 
-# Run the default example NRSSH model phase diagram
+3. **Generate the Default NRSSH Phase Diagram**
+```bash
 python example_tests/nrssh_examples/nrssh_phases.py
 ```
 
+4. **Generate a Custom NRSSH Phase Diagram**
 ```python
-'''example_tests.nrssh_examples.nrssh_phases.py
-
-Generate a NRSSH model phase diagram with your chosen parameters'''
-
+'''example_tests.nrssh_examples.nrssh_phases.py'''
 from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
 
-# v, u, r in (0, 1]
+# v, u, r in the interval (0, 1]
 # S >= 0
 # Recommended that points are between 15 and 25 for quick generation
 if __name__ == "__main__":
@@ -39,7 +41,7 @@ if __name__ == "__main__":
          v=0.3, u=0.2, r=0.9, S=1.0, points=20, verbose=True)
 ```
 
-## Why This Work Matters
+## Why This Matters
 
 ### 🔴 **Advanced Laser Physics**
 Understanding how nonlinear gain saturation and loss effects interact in topological lattice systems provides crucial insights for developing next-generation laser technologies. The phase diagrams reveal optimal operating conditions for various laser applications, from high-power semiconductor lasers to exotic chaotic mode-locked systems.
