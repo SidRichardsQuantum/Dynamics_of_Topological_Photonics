@@ -106,6 +106,7 @@ Simulations are ran over 100s of parameter combinations to create **phase diagra
 
 ```
 Dynamics_of_Topological_Photonics/
+├── requirements.txt                      # Packages required to be installed
 ├── README.md                             # This file
 ├── THEORY.md                             # File explaining the physics behind this project
 ├── src/                                  # Source code
