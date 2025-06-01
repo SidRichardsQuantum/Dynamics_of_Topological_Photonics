@@ -12,10 +12,28 @@ This repository contains a revised version of the code from my dissertation at L
 
 ## Quick Start
 
+```bash
+# Clone the repository
+git clone https://github.com/SidRichardsQuantum/Dynamics_of_Topological_Photonics.git
+cd Dynamics_of_Topological_Photonics
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the default example NRSSH model phase diagram
+python example_tests/nrssh_examples/nrssh_phases.py
+```
+
 ```python
-'''example_tests.nrssh_examples.nrssh_phases.py'''
+'''example_tests.nrssh_examples.nrssh_phases.py
+
+Generate a NRSSH model phase diagram with your chosen parameters'''
+
 from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
 
+# v, u, r in (0, 1]
+# S >= 0
+# Recommended that points are between 15 and 25 for quick generation
 if __name__ == "__main__":
          gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(
          v=0.3, u=0.2, r=0.9, S=1.0, points=20, verbose=True)
