@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh_lattice import HamiltonianSystem
+from src.models.nrssh_lattice import NRSSHLatticeSystem
 
 
 def find_convergence_time(system, dt=0.015, tolerance=1e-4, max_time=10, verbose=False):
@@ -130,7 +130,7 @@ def create_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, n_cells=40,
     for i, gamma1 in enumerate(gamma1_array):
         for j, gamma2 in enumerate(gamma2_array):
             # Create system with current parameters
-            system = HamiltonianSystem(
+            system = NRSSHLatticeSystem(
                 n_cells=n_cells,
                 v=v,
                 u=u,

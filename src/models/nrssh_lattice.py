@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class HamiltonianSystem:
+class NRSSHLatticeSystem:
     """
     A class for simulating a Hamiltonian for the NRSSH model
     with nonlinear saturable gain and constant loss dynamics.

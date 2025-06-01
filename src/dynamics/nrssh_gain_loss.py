@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh_lattice import HamiltonianSystem
+from src.models.nrssh_lattice import NRSSHLatticeSystem
 
 
 def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_backtrack=50,
@@ -173,7 +173,7 @@ def plot_example_final_state(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2
         The system object used
     """
     # Create the system
-    system = HamiltonianSystem(
+    system = NRSSHLatticeSystem(
         n_cells=n_cells,
         v=v,  # Non-reciprocal forward hopping
         u=u,  # Non-reciprocal backward hopping

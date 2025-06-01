@@ -1,17 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh_lattice import HamiltonianSystem
+from src.models.nrssh_lattice import NRSSHLatticeSystem
 
 
 # Create the system with the same parameters
 n_cells = 50
-system = HamiltonianSystem(
+system = NRSSHLatticeSystem(
     n_cells=n_cells,
-    v=0.2,      # Previously first argument
-    u=0.5,      # Previously second argument
-    r=0.9,      # Previously third argument
-    gamma1=0.0, # No gain (was handled by onsite=1 previously)
-    gamma2=0.0  # No loss (was handled by onsite=1 previously)
+    v=0.2,
+    u=0.5,
+    r=0.9,
+    gamma1=0.0, # No gain
+    gamma2=0.0  # No loss
 )
 
 # Get the Hamiltonian with real onsite energy = 1 (no nonlinear effects)

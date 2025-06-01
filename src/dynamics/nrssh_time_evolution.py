@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh_lattice import HamiltonianSystem
+from src.models.nrssh_lattice import NRSSHLatticeSystem
 
 
 def evolve_and_plot(system, dt, total_time, plot_interval=None):
@@ -103,7 +103,7 @@ def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0
         The system object used
     """
     # Create the system
-    system = HamiltonianSystem(
+    system = NRSSHLatticeSystem(
         n_cells=n_cells,
         v=v,  # Non-reciprocal forward hopping
         u=u,  # Non-reciprocal backward hopping

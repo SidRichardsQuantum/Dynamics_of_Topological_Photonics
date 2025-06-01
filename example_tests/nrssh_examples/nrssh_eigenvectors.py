@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh_lattice import HamiltonianSystem
+from src.models.nrssh_lattice import NRSSHLatticeSystem
 
 # Create the system with the same parameters
 n_cells = 50
-system = HamiltonianSystem(
+system = NRSSHLatticeSystem(
     n_cells=n_cells,
     v=0.1,
     u=0.5,
