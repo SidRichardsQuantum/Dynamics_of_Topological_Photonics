@@ -85,7 +85,7 @@ We compute and visualize:
 ### 2. **Inclusion of Gain and Loss**
 - Introduced as imaginary onsite potential terms.
 - Gain features **nonlinear saturation** controlled by intensity and a saturation parameter $S$.
-- $\gamma_1$ (gain) and $\gamma_2$ (loss) are tunable parameters.
+- `\gamma_1` (gain) and `$\gamma_2$` (loss) are tunable parameters.
 - For the NRSSH model: all sites have both gain and loss terms.
 - For the diamond model: A sites have gain, B and C sites have loss.
 
