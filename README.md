@@ -77,9 +77,9 @@ We study two main lattice models:
 ## Methodology
 
 ### 1. **Hamiltonian Construction**
-Hamiltonians are defined by populating the matrix entry `[i, j]` with the hopping strength from site $j$ to $i$.  
+Hamiltonians are defined by populating the matrix entry $`[i, j]`$ with the hopping strength from site $`j`$ to $`i`$.  
 We compute and visualize:
-- **Band structure** in momentum ($k$)-space
+- **Band structure** in momentum ($`k`$)-space
 - **Edge states** in real space (finding topologically protected modes)
 
 ### 2. **Inclusion of Gain and Loss**
