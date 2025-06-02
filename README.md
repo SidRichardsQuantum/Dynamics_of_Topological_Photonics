@@ -74,6 +74,10 @@ We study two main lattice models:
 
 2. **Diamond (Rhombic) Model** 💎 A lattice with three sites per unit cell (A, B, C). Hoppings occur between A-B and A-C but not between B and C. Different hopping configurations lead to various "dimerizations" and exotic laser phases.
 
+Gain and loss distribution will be different between these models, which will result in exclusive properties.
+A temporal criterion is formulated to indicate whether the systems have converged / diverged into a final state - dependent on site intensities.
+These final state times draw out phase diagrams of gain against loss, which are different for each combination of hopping strengths and saturation.
+
 ## Methodology
 
 ### 1. **Hamiltonian Construction**
