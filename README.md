@@ -71,12 +71,10 @@ By studying these topological phase diagrams, we gain powerful insights into how
 We study two main lattice models:
 
 1. **Non-reciprocal SSH (NRSSH) Model** - A variation of the Su–Schrieffer–Heeger model with unequal (non-reciprocal) intra-cell hopping in opposite directions.
-Setting $v=u$ reduces the system to the SSH Model, and similarly $v=u=r$ forms the trivial tight-binding model.
 
 ![NRSSH Model](images/NRSSH%20Model.png)
 
 2. **Diamond (Rhombic) Model** - A lattice with three sites per unit cell (A, B, C). Hoppings occur between A-B and A-C but not between B and C. Different hopping configurations lead to various "dimerizations" and exotic laser phases.
-Setting opposite hoppings as equal ($t_1=t_4$ and $t_2=t_3$) initializes "facing-dimerization", and adjacent hoppings as equal ($t_1=t_3$ and $t_2=t_4$) initializes "neighbouring-dimerization".
 
 ![Diamond Model](images/Diamond%20Model.png)
 
