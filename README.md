@@ -1,6 +1,6 @@
 # Dynamics of Topological Photonics with Nonlinear Saturable Gain and Loss
 
-This repository contains a revised version of the code from my dissertation at Lancaster University, developed under the supervision of Dr. Henning Schomerus. The project explores the fascinating intersection of **topological laser phases**, **nonlinear optics**, and **quantum physics** by studying how edge modes and nonlinear dynamics behave in photonic lattices through comprehensive phase diagram analysis.
+This repository contains a revised version of the code from my dissertation at Lancaster University, developed under the supervision of Dr. Henning Schomerus. The project explores the fascinating intersection of **topology**, **nonlinear optics** and **quantum physics**, by studying edge modes and nonlinear dynamics of photonic lattices through comprehensive phase diagram analysis.
 
 ## Table of Contents
 - [Quick Start](#quick-start)⚡
@@ -35,7 +35,7 @@ from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
 
 # v, u, r in the interval (0, 1]
 # S >= 0
-# Recommended that points are between 15 and 25 for quick generation
+# Recommended that points are between 15 and 25
 if __name__ == "__main__":
          gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(
          v=0.3, u=0.2, r=0.9, S=1.0, points=20, verbose=True)
@@ -74,12 +74,16 @@ We study two main lattice models:
 
 2. **Diamond (Rhombic) Model** 💎 A lattice with three sites per unit cell (A, B, C). Hoppings occur between A-B and A-C but not between B and C. Different hopping configurations lead to various "dimerizations" and exotic laser phases.
 
+Gain and loss distribution will be different between these models, which will result in exclusive properties.
+A temporal criterion is formulated to indicate whether the systems have converged / diverged into a final state - dependent on site intensities.
+These final state times draw out phase diagrams of gain against loss, which are different for each combination of hopping strengths and saturation.
+
 ## Methodology
 
 ### 1. **Hamiltonian Construction**
 Hamiltonians are defined by populating the matrix entry $[i, j]$ with the hopping strength from site $j$ to $i$.  
 We compute and visualize:
-- **Band structure** in momentum ($k$)-space
+- **Band structure** in momentum($k$)-space
 - **Edge states** in real space (finding topologically protected modes)
 
 ### 2. **Inclusion of Gain and Loss**
@@ -91,7 +95,7 @@ We compute and visualize:
 
 ### 3. **Time Evolution**
 We evolve the system:
-- Using a **2nd-order time evolution operator** $U(t)$ to generate $\phi(t + dt)$ from $\phi(t)$.
+- Using a **2nd-order time evolution operator** $U(t)$ to generate $\varphi(t + dt)$ from $\varphi(t)$.
 - Evolution is repeated for 50 steps (the number of colours in the colour-map).
 
 ### 4. **Steady-State Detection**
@@ -108,8 +112,9 @@ Simulations are ran over 100s of parameter combinations to create **phase diagra
 
 ```
 Dynamics_of_Topological_Photonics/
-├── requirements.txt                      # Packages required to be installed
+├── LICENSE                               # MIT License text
 ├── README.md                             # This file
+├── requirements.txt                      # Packages required to be installed
 ├── THEORY.md                             # File explaining the physics behind this project
 ├── src/                                  # Source code
 │   ├── models/
