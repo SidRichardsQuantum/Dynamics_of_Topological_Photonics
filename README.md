@@ -70,9 +70,15 @@ By studying these topological phase diagrams, we gain powerful insights into how
 ## Overview
 We study two main lattice models:
 
-1. **Non-reciprocal SSH (NRSSH) Model** 🔴=🔵-🔴=🔵 A variation of the Su–Schrieffer–Heeger model with unequal (non-reciprocal) intra-cell hopping in opposite directions.
+1. **Non-reciprocal SSH (NRSSH) Model** - A variation of the Su–Schrieffer–Heeger model with unequal (non-reciprocal) intra-cell hopping in opposite directions.
+Setting $v=u$ reduces the system to the SSH Model, and similarly $v=u=r$ forms the trivial tight-binding model.
 
-2. **Diamond (Rhombic) Model** 💎 A lattice with three sites per unit cell (A, B, C). Hoppings occur between A-B and A-C but not between B and C. Different hopping configurations lead to various "dimerizations" and exotic laser phases.
+![NRSSH Model](images/NRSSH%20Model.png)
+
+2. **Diamond (Rhombic) Model** - A lattice with three sites per unit cell (A, B, C). Hoppings occur between A-B and A-C but not between B and C. Different hopping configurations lead to various "dimerizations" and exotic laser phases.
+Setting opposite hoppings as equal ($t_1=t_4$ and $t_2=t_3$) initializes "facing-dimerization", and adjacent hoppings as equal ($t_1=t_3$ and $t_2=t_4$) initializes "neighbouring-dimerization".
+
+![Diamond Model](images/Diamond%20Model.png)
 
 Gain and loss distribution will be different between these models, which will result in exclusive properties.
 A temporal criterion is formulated to indicate whether the systems have converged / diverged into a final state - dependent on site intensities.
@@ -115,6 +121,9 @@ Dynamics_of_Topological_Photonics/
 ├── LICENSE                               # MIT License text
 ├── README.md                             # This file
 ├── requirements.txt                      # Packages required to be installed
+├── images                                # Diagrams of the lattices
+│   ├── NRSSH Model/
+│   └── Diamond Model/
 ├── THEORY.md                             # File explaining the physics behind this project
 ├── src/                                  # Source code
 │   ├── models/
