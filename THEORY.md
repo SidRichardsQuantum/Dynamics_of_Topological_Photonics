@@ -5,7 +5,6 @@ This document provides the mathematical and physical foundations underlying the 
 ## Table of Contents
 - [Introduction](#introduction)
 - [Lattice Models](#lattice-models)
-- [Hamiltonian Construction](#hamiltonian-construction)
 - [Gain and Loss Mechanisms](#gain-and-loss-mechanisms)
 - [Time Evolution](#time-evolution)
 - [Phase Classification](#phase-classification)
@@ -25,7 +24,7 @@ This project focuses on the behaviour of:
 
 ## Lattice Models
 
-### Non-Reciprocal SSH (NRSSH) Model
+1. ### Non-Reciprocal SSH (NRSSH) Model
 
 The classic Su-Schrieffer-Heeger (SSH) model is adapted by introducing hoppings:
 
@@ -33,58 +32,59 @@ The classic Su-Schrieffer-Heeger (SSH) model is adapted by introducing hoppings:
 - **Inter-cell hopping**: $r$
 - **Onsite potential**: $\epsilon$
 
-**NRSSH Hamiltonian:**
+(Setting $v=u$ reduces the system to the SSH Model, and similarly $v=u=r$ forms the trivial tight-binding model.)
+
+![NRSSH Model](images/NRSSH%20Model.png)
+
+#### **NRSSH Hamiltonian:**
 
 Hamiltonians are constructed by populating matrix entry $[i, j]$ with the hopping strength **from site $j$ to site $i$**:
 
-$H = \Sigma_i (v|2i⟩⟨2i+1| + u|2i+1⟩⟨2i| + r(|2i+1⟩⟨2i+2| + |2i+2⟩⟨2i+1|))$
+$H = \Sigma_i (v|2i⟩⟨2i+1| + u|2i+1⟩⟨2i| + r(|2i+1⟩⟨2i+2| + |2i+2⟩⟨2i+1|)) + \epsilon I$
 
-### Diamond (Rhombic) Model
+2. ### Diamond (Rhombic) Model
 
 - **Intra-cell A-B hopping**: $t_1$
 - **Intra-cell A-C hopping**: $t_2$
 - **Inter-cell A-B hopping**: $t_3$
 - **Inter-cell A-C hopping**: $t_4$
+- **Onsite potential**: $\epsilon$
 
-**Diamond Hamiltonian:**
+![Diamond Model](images/Diamond%20Model.png)
 
-$H = \Sigma_i(t_1(|3i⟩⟨3i+1| + |3i+1⟩⟨3i|) + t_2(|3i⟩⟨3i+2| + |3i+2⟩⟨3i|) + t_3(|3i+1⟩⟨3i+3| + |3i+3⟩⟨3i+1|) + t_4(|3i+2⟩⟨3i+3| + |3i+3⟩⟨3i+2|))$
-
-**Dimerizations:**
+#### **Dimerizations:**
 - Facing: $t_1=t_4$ and $t_2=t_3$
 - Neighbouring: $t_1=t_3$ and $t_2=t_4$
 - Intra $\neq$ inter: $t_1=t_2$ and $t_3=t_4$
 
-**Physical Significance:**
-- More complicated band structure than the NRSSH's
-- Multiple topological phases exist
-- Richer phase transition behavior
+#### **Diamond Hamiltonian:**
+
+$H = \Sigma_i(t_1(|3i⟩⟨3i+1| + |3i+1⟩⟨3i|) + t_2(|3i⟩⟨3i+2| + |3i+2⟩⟨3i|) + t_3(|3i+1⟩⟨3i+3| + |3i+3⟩⟨3i+1|) + t_4(|3i+2⟩⟨3i+3| + |3i+3⟩⟨3i+2|)) + \epsilon I$
 
 ## Gain and Loss Mechanisms
 
-### Nonlinear Saturable Gain (NSG) and Contant Loss
+**NRSSH Model**: All sites have both gain and loss.
+
+**Diamond Model**: NSG on the A sites. Constant loss $\gamma_2$ on the B and C sites.
+
+### Nonlinear Saturable Gain (NSG) and Contant Loss:
 
 - **$\gamma_1 \in (0,1]$**: Gain parameter
 - **$\gamma_2 \in (0,1]$**: Loss parameter
 - **$S \geq 0$**: Saturation parameter
 
-The NSG term is:
-
-$i\gamma_1 / (1 + S|\varphi|^2)$
-
-where $\varphi$ is the site's amplitude.
-
-### Site-Specific Assignment
-
-**NRSSH Model**: All sites have both gain and loss.
-**Diamond Model**: NSG on the A sites. Constant loss $\gamma_2$ on the B and C sites.
+The NSG term is $i\gamma_1 / (1 + S|\varphi_m|^2)$, where $|\varphi_m|^2$ is site m's intensity.
 
 ## Time-Evolution Operator
 
+We set $\hbar=1$.
+This is what most quantum physicists do (along with setting the speed of light $c=1$) to avoid writing constants and make the maths easier.
+Computationally, these "natural units" benefits us; because omitting $\hbar$ (which is of the order $10^{-36}$), makes our chosen values for $dt$ extremely smaller when physically-realized.
+Therefore, we can set $dt$ to float values that "look big", such as $0.01$.
+
 ### Derivation
 
-We set $\hbar=1$.
-The Schrödinger equation $i∂_t\varphi = H\varphi$ can be combined with the definition of the time-derivative $∂_t\varphi = (\varphi(t + dt) - \varphi(t)) / dt$ to derive the 1st-order time-evolution operator:
+The Schrödinger equation $id\varphi / dt = H\varphi$ can be combined with the definition of the time-derivative $d\varphi / dt = (\varphi(t + dt) - \varphi(t)) / dt$ to derive the 1st-order time-evolution operator:
 
 $U(t) = I - idtH(t)$.
 
@@ -98,9 +98,9 @@ $\varphi(t + dt/2) = (I + idtH / 2)\varphi(t + dt)$
 
 we derive the unitary 2nd-order time-evolution operator:
 
-$U(t) = (I - idtH / 2) / (I + idtH / 2)$.
+$U(t) = (I - idtH / 2)(I + idtH / 2)^{-1}$.
 
-A final state is determined by when the difference in total intensities between successive time-increments dt drops below a certain "tolerance" parameter.
+A final state is determined by when the difference in total intensities between successive time-increments $dt$ drops below a certain "$tolerance$" parameter.
 
 ## Eigenvalues and Eigenvectors
 
