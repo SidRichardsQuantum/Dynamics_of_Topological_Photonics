@@ -6,11 +6,11 @@ This document provides the mathematical and physical foundations underlying the 
 - [Introduction](#introduction)
 - [Lattice Models](#lattice-models)
 - [Gain and Loss Mechanisms](#gain-and-loss-mechanisms)
-- [Time Evolution](#time-evolution)
+- [Time-Evolution Operator](#time-evolution-operator)
+- [Eigenvalues and Eigenvectors](#eigenvalues-and-eigenvectors)
 - [Phase Classification](#phase-classification)
-- [Topological Properties](#topological-properties)
-- [Physical Interpretation](#physical-interpretation)
-- [References](#references)
+- [Phase Boundaries](#phase-boundaries)
+- [Realisations](#realisations)
 
 ## Introduction
 
@@ -107,7 +107,7 @@ A final state is determined by when the difference in total intensities between 
 ## Eigenvalues and Eigenvectors
 
 Eigenvalues of the Hamiltonian (eigenenergies), when plotted in $k$-space, form the band structure for the lattice.
-In some phases, there is a gap in the bands such that no particles can freely jump across.
+In some phases, there is a gap in the bands such that particles require excitation to jump across the gap.
 Insulators have large band gaps that electrons can't easily jump across.
 Metals have no band gap, so electrons can freely move between the eigenenergy states.
 
@@ -136,13 +136,13 @@ Other phases host localised edge states, which have eigenenergies within the ban
 - Neighbouring points are chaotic, stable or lossy
 - 2nd-order (continuous) phase transitions between neighbouring phases
 
-### Phase Boundaries
+## Phase Boundaries
 
 **1st-Order Transitions**: Discontinuous jumps in final times.
 **2nd-Order Transitions**: Continuous / smooth changes.
 **Critical Points**: Where transitions change from the 1st to 2nd-order.
 
-### Laser Realisation
+## Realisations
 
 **Gain Saturation**: Prominent in laser gain media, and could parameterise high signal inputs because a medium's available energy is finite.
 **Loss Mechanisms**: General energy dissipation and other lossy effects such as scattering.
