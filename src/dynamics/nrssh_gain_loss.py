@@ -141,7 +141,7 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_ba
     return final_phi, final_time, converged
 
 
-def plot_example_final_state(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0.5, S=1.0,
+def plot_example_final_state(n_cells=40, v=0.2, u=0.5, r=0.9, gamma1=0.5, gamma2=0.2, S=1.0,
                              dt=0.01, tolerance=1e-4, max_time=50, verbose=True):
     """
     Plot an example final state evolution of the NRSSH system.

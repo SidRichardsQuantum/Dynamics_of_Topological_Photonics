@@ -7,7 +7,7 @@ class NRSSHLatticeSystem:
     with nonlinear saturable gain and constant loss dynamics.
     """
 
-    def __init__(self, n_cells, v=1.0, u=1.0, r=1.0, gamma1=1.0, gamma2=0.5, S=1.0):
+    def __init__(self, n_cells, onsite=0.0, v=1.0, u=1.0, r=1.0, gamma1=1.0, gamma2=0.5, S=1.0):
         """
         Initialize the Hamiltonian system.
 
@@ -15,6 +15,8 @@ class NRSSHLatticeSystem:
         -----------
         n_cells : int
             Number of unit cells in the system
+        onsite: float
+            onsite energy
         v : float
             Non-reciprocal intra-cell hopping strength (forward)
         u : float
@@ -33,6 +35,7 @@ class NRSSHLatticeSystem:
         self.r = r
         self.u = u
         self.v = v
+        self.onsite = onsite
         self.gamma1 = gamma1
         self.gamma2 = gamma2
         self.S = S
