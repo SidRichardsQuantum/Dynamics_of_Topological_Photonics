@@ -5,7 +5,6 @@ This document provides the mathematical and physical foundations underlying the 
 ## Table of Contents
 - [Introduction](#introduction)
 - [Lattice Models](#lattice-models)
-- [Hamiltonian Construction](#hamiltonian-construction)
 - [Gain and Loss Mechanisms](#gain-and-loss-mechanisms)
 - [Time Evolution](#time-evolution)
 - [Phase Classification](#phase-classification)
@@ -78,10 +77,14 @@ The NSG term is $i\gamma_1 / (1 + S|\varphi_m|^2)$, where $|\varphi_m|^2$ is sit
 
 ## Time-Evolution Operator
 
+We set $\hbar=1$.
+This is what most quantum physicists do (along with setting the speed of light $c=1$) to avoid writing constants and make the maths easier.
+Computationally, these "natural units" benefits us; because omitting $\hbar$ (which is of the order $10^{-36}$), makes our chosen values for $dt$ extremely smaller when physically-realized.
+Therefore, we can set $dt$ to float values that "look big", such as $0.01$.
+
 ### Derivation
 
-We set $\hbar=1$.
-The Schrödinger equation $i∂_t\varphi = H\varphi$ can be combined with the definition of the time-derivative $∂_t\varphi = (\varphi(t + dt) - \varphi(t)) / dt$ to derive the 1st-order time-evolution operator:
+The Schrödinger equation $id\varphi / dt = H\varphi$ can be combined with the definition of the time-derivative $d\varphi / dt = (\varphi(t + dt) - \varphi(t)) / dt$ to derive the 1st-order time-evolution operator:
 
 $U(t) = I - idtH(t)$.
 
@@ -97,7 +100,7 @@ we derive the unitary 2nd-order time-evolution operator:
 
 $U(t) = (I - idtH / 2)(I + idtH / 2)^{-1}$.
 
-A final state is determined by when the difference in total intensities between successive time-increments dt drops below a certain "tolerance" parameter.
+A final state is determined by when the difference in total intensities between successive time-increments $dt$ drops below a certain "$tolerance$" parameter.
 
 ## Eigenvalues and Eigenvectors
 
