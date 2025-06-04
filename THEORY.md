@@ -6,11 +6,11 @@ This document provides the mathematical and physical foundations underlying the 
 - [Introduction](#introduction)
 - [Lattice Models](#lattice-models)
 - [Gain and Loss Mechanisms](#gain-and-loss-mechanisms)
-- [Time Evolution](#time-evolution)
+- [Time-Evolution Operator](#time-evolution-operator)
+- [Eigenvalues and Eigenvectors](#eigenvalues-and-eigenvectors)
 - [Phase Classification](#phase-classification)
-- [Topological Properties](#topological-properties)
-- [Physical Interpretation](#physical-interpretation)
-- [References](#references)
+- [Phase Boundaries](#phase-boundaries)
+- [Realisations](#realisations)
 
 ## Introduction
 
@@ -63,10 +63,6 @@ $H = \Sigma_i(t_1(|3i⟩⟨3i+1| + |3i+1⟩⟨3i|) + t_2(|3i⟩⟨3i+2| + |3i+2�
 
 ## Gain and Loss Mechanisms
 
-**NRSSH Model**: All sites have both gain and loss.
-
-**Diamond Model**: NSG on the A sites. Constant loss $\gamma_2$ on the B and C sites.
-
 ### Nonlinear Saturable Gain (NSG) and Contant Loss:
 
 - **$\gamma_1 \in (0,1]$**: Gain parameter
@@ -75,20 +71,26 @@ $H = \Sigma_i(t_1(|3i⟩⟨3i+1| + |3i+1⟩⟨3i|) + t_2(|3i⟩⟨3i+2| + |3i+2�
 
 The NSG term is $i\gamma_1 / (1 + S|\varphi_m|^2)$, where $|\varphi_m|^2$ is site m's intensity.
 
+**NRSSH Model**: All sites have both gain and loss.
+
+**Diamond Model**: NSG on the A sites. Constant loss $\gamma_2$ on the B and C sites.
+
 ## Time-Evolution Operator
 
-We set $\hbar=1$.
-This is what most quantum physicists do (along with setting the speed of light $c=1$) to avoid writing constants and make the maths easier.
-Computationally, these "natural units" benefits us; because omitting $\hbar$ (which is of the order $10^{-36}$), makes our chosen values for $dt$ extremely smaller when physically-realized.
-Therefore, we can set $dt$ to float values that "look big", such as $0.01$.
+We use "natural units" and set $\hbar = 1$.
+This is what quantum physicists use (along with setting the speed of light $c = 1$) to avoid writing constants and make the maths easier.
+(Natural units allows us to refer to the $k$-space, where $p=\hbar k$ is the wave number, as the "momentum-space".)
+Computationally, using natural units benefits us; because omitting $\hbar \approx 10^{-34}$, makes our chosen values for $dt$ extremely smaller when physically-realized.
+Therefore, we can set $dt$ to float values that "look big", such as $0.1$.
 
 ### Derivation
 
-The Schrödinger equation $id\varphi / dt = H\varphi$ can be combined with the definition of the time-derivative $d\varphi / dt = (\varphi(t + dt) - \varphi(t)) / dt$ to derive the 1st-order time-evolution operator:
+The Schrödinger equation $i d\varphi / dt = H \varphi$ can be combined with the definition of the time-derivative $d\varphi / dt = (\varphi(t + dt) - \varphi(t)) / dt$ to derive the 1st-order time-evolution operator:
 
-$U(t) = I - idtH(t)$.
+$U(t) = I - i dt H(t)$.
 
-But this operator is not unitary even if $H$ is Hermitian. So we upgrade this to the 2nd-order by considering $\pm dt / 2$:
+But this operator is **not** unitary even if $H$ is Hermitian.
+So we upgrade this to the 2nd-order by considering $\pm dt / 2$:
 
 $\varphi(t + dt/2) = (I - idtH / 2)\varphi(t)$
 
@@ -100,12 +102,12 @@ we derive the unitary 2nd-order time-evolution operator:
 
 $U(t) = (I - idtH / 2)(I + idtH / 2)^{-1}$.
 
-A final state is determined by when the difference in total intensities between successive time-increments $dt$ drops below a certain "$tolerance$" parameter.
+A final state is determined by when the difference in total intensities between successive time-increments $dt$ drops below a certain "tolerance" parameter.
 
 ## Eigenvalues and Eigenvectors
 
 Eigenvalues of the Hamiltonian (eigenenergies), when plotted in $k$-space, form the band structure for the lattice.
-In some phases, there is a gap in the bands such that no particles can easily jump across.
+In some phases, there is a gap in the bands such that particles require excitation to jump across the gap.
 Insulators have large band gaps that electrons can't easily jump across.
 Metals have no band gap, so electrons can freely move between the eigenenergy states.
 
@@ -134,13 +136,13 @@ Other phases host localised edge states, which have eigenenergies within the ban
 - Neighbouring points are chaotic, stable or lossy
 - 2nd-order (continuous) phase transitions between neighbouring phases
 
-### Phase Boundaries
+## Phase Boundaries
 
 **1st-Order Transitions**: Discontinuous jumps in final times.
 **2nd-Order Transitions**: Continuous / smooth changes.
 **Critical Points**: Where transitions change from the 1st to 2nd-order.
 
-### Laser Realisation
+## Realisations
 
 **Gain Saturation**: Prominent in laser gain media, and could parameterise high signal inputs because a medium's available energy is finite.
 **Loss Mechanisms**: General energy dissipation and other lossy effects such as scattering.

@@ -121,7 +121,10 @@ Dynamics_of_Topological_Photonics/
 ├── requirements.txt                      # Packages required to be installed
 ├── images                                # Diagrams of the lattices
 │   ├── NRSSH Model/
-│   └── Diamond Model/
+│   ├── NRSSH default eigenvalues/
+│   ├── Diamond Model/
+│   ├── Diamond default last moments/
+│   └── Diamond default phase diagram/
 ├── THEORY.md                             # File explaining the physics behind this project
 ├── src/                                  # Source code
 │   ├── models/
@@ -158,41 +161,41 @@ Dynamics_of_Topological_Photonics/
 ### **NRSSH Findings**
 
 **Phase Behavior Discovery**
-- Discovered first-order phase transitions leading to chaotic regimes when gain saturation mediates prominent nonlinearities
-- Mapped lasing threshold discontinuities influenced by system parameters
+- Discovered 1st-order phase transitions leading to chaotic regimes when gain saturation mediates prominent nonlinearities.
+- Mapped lasing threshold discontinuities influenced by system parameters.
 
 **Temporal Dynamics**
-- Revealed irregular chaotic behavior with hyper-sensitivity to initial conditions
-- Demonstrated that chaotic phases correspond to oscillating phases
+- Revealed irregular chaotic behavior with hyper-sensitivity to initial conditions.
+- Demonstrated that chaotic phases correspond to oscillating phases.
 
 ### **Diamond Findings**
 
 **Complex Phase Structure**
-- Uncovered additional phase types beyond the NRSSH model, including mixed phases
-- Identified exclusive stable phases in face-dimerized systems with higher final times compared to lossy stable regions
-- Found that only saturated systems without neighboring-dimerization can enter chaotic phases
+- Uncovered additional phase types beyond the NRSSH model, including mixed phases.
+- Identified exclusive stable phases in face-dimerized systems with higher final times compared to lossy stable regions.
+- Found that only saturated systems without neighboring-dimerization can enter chaotic phases.
 
 **Critical Phase Transitions**
-- Documented both 1st-order and 2nd-order phase transitions between stable and chaotic phases
-- Discovered non-linear phase transition curves (unlike the linear NRSSH case)
-- Identified critical points where phase transition curves gradually shift from 1st-order to 2nd-order behavior
+- Documented both 1st-order and 2nd-order phase transitions between stable and chaotic phases.
+- Discovered non-linear phase transition curves.
+- Identified critical points where phase transition curves gradually shift from 1st-order to 2nd-order behavior.
 
 ### 🔑 **Key Technical Achievements**
 
 **Temporal Criterion Development**
-- Established robust temporal evolution criteria for phase classification
-- Validated phase diagram generation methodology across different lattice geometries
-- Demonstrated scalability of the approach to complex multi-parameter spaces
+- Established robust temporal evolution criteria for phase classification.
+- Validated phase diagram generation methodology across different lattice geometries.
+- Demonstrated scalability of the approach to complex multi-parameter spaces.
 
 **Stability Analysis**
-- Successfully prevented unstable phases in systems with non-zero gain saturation and appropriate dimerization
-- Characterized conditions where systems reach stable final states versus continuous evolution
-- Mapped parameter spaces that avoid optical damage thresholds
+- Successfully prevented unstable phases in systems with non-zero gain saturation and appropriate dimerization.
+- Characterized conditions where systems reach stable final states versus continuous evolution.
+- Mapped parameter spaces that avoid optical damage thresholds.
 
 **Physical Correspondence**
-- Established clear connections between phase behaviors and real laser dynamics
-- Demonstrated relevance to semiconductor laser saturation effects and high-power applications
-- Confirmed applicability to quantum walks, annealing and topological quantum computing scenarios
+- Established clear connections between phase behaviors and real laser dynamics.
+- Demonstrated relevance to semiconductor laser saturation effects and high-power applications.
+- Confirmed applicability to quantum walks, annealing and topological quantum computing scenarios.
 
 These results provide a comprehensive framework for understanding and predicting the behavior of complex topological systems under competing gain and loss effects, with immediate applications in laser design and nonlinear optics research, and potentially in (topological) quantum computing and annealing.
 
