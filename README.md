@@ -121,10 +121,7 @@ Dynamics_of_Topological_Photonics/
 ├── requirements.txt                      # Packages required to be installed
 ├── images                                # Diagrams of the lattices
 │   ├── NRSSH Model/
-│   ├── NRSSH default eigenvalues/
-│   ├── Diamond Model/
-│   ├── Diamond default last moments/
-│   └── Diamond default phase diagram/
+│   └── Diamond Model/
 ├── THEORY.md                             # File explaining the physics behind this project
 ├── src/                                  # Source code
 │   ├── models/
