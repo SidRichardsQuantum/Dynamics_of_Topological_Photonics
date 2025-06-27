@@ -159,6 +159,8 @@ Other phases host localised edge states, which have eigenenergies within the ban
 
 ---
 
-📘 Author: [Sid Richards]
+📘 Author: Sid Richards (SidRichardsQuantum)
 
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20" /> LinkedIn: [https://www.linkedin.com/in/sid-richards-21374b30b/]
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20" /> LinkedIn: https://www.linkedin.com/in/sid-richards-21374b30b/
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
