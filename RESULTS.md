@@ -21,3 +21,11 @@
 - Documented both 1st-order and 2nd-order phase transitions between stable and chaotic phases.
 - Discovered non-linear phase transition curves.
 - Identified critical points where phase transition curves gradually shift from 1st-order to 2nd-order behavior.
+
+---
+
+📘 Author: Sid Richards (SidRichardsQuantum)
+
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="20" /> LinkedIn: https://www.linkedin.com/in/sid-richards-21374b30b/
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
