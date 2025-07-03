@@ -92,9 +92,7 @@ Dynamics_of_Topological_Photonics/
 ├── THEORY.md                             # File explaining the physics behind this project
 ├── RESULTS.md                            # Results, conclusions and evaluations
 ├── requirements.txt                      # Packages required to be installed
-├── images                                # Diagrams of the lattices
-│   ├── NRSSH Model/
-│   └── Diamond Model/
+├── images                                # Directory full of many png files from examples
 ├── src/                                  # Source code
 │   ├── models/
 │   │   ├── __init__/
