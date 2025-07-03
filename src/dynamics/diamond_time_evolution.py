@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.diamond_lattice import DiamondLatticeSystem
+import os
 
 
-def evolve_and_plot(system, dt, total_time, plot_interval=None):
+def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
     """
-    Evolve the system and plot the wavefunction intensity over time.
+    Evolve the system and save the wavefunction intensity plot over time.
 
     Parameters:
     -----------
@@ -17,7 +18,12 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None):
         Total evolution time
     plot_interval : int, optional
         Plot every nth step (if None, plots based on available colors)
+    verbose : bool
+        Whether to print save path
     """
+    # Create images directory if it doesn't exist
+    os.makedirs('images', exist_ok=True)
+
     N = system.N
     x = np.linspace(1, N, N)  # Mimics real-space
 
@@ -50,13 +56,8 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None):
 
         # Evolve the system (skip on last step)
         if step < n_steps:
-            # Get current Hamiltonian with nonlinear terms
             H = system.get_hamiltonian(phi, onsite=0.0)
-
-            # Get time evolution operator
             U_op = system.time_evolution_operator(H, dt)
-
-            # Evolve the wavefunction
             phi = np.dot(U_op, phi)
             time += dt
 
@@ -64,18 +65,26 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None):
     plt.xlabel('Site-Index')
     plt.ylabel('Intensity')
     legend_elements = [
-        plt.Line2D([0], [0], color='#00FFFF', label='Start = '+str(round(time - n_steps * dt, 2))+''),
-        plt.Line2D([0], [0], color='#FF00FF', label='Finish = '+str(round(time, 2))+'')
+        plt.Line2D([0], [0], color='#00FFFF', label='Start = ' + str(round(time - n_steps * dt, 2))),
+        plt.Line2D([0], [0], color='#FF00FF', label='Finish = ' + str(round(time, 2)))
     ]
     plt.legend(handles=legend_elements)
     plt.title('2nd-Order Evolution of the Diamond Model')
     plt.grid(True, alpha=0.3)
-    plt.show()
+
+    # Save the plot
+    filename = (f"images/diamond_first_moments_N={3 * system.n_cells + 1}_S={system.S}_"
+                f"t1={system.t1}_t2={system.t2}_t3={system.t3}_t4={system.t4}.png")
+    plt.savefig(filename, dpi=300)
+    plt.close()
+
+    if verbose:
+        print(f"Plot saved to {filename}")
 
     return phi  # Return final wavefunction
 
 
-def plot_example_evolution(n_cells=40, t1=0.1, t2=0.4, t3=0.7, t4=0.3, gamma1=0.6, gamma2=0.5, S=1.0,
+def plot_example_evolution(n_cells=15, t1=0.1, t2=0.4, t3=0.7, t4=0.3, gamma1=0.6, gamma2=0.5, S=1.0,
                            dt=0.1, total_time=None, verbose=True):
     """
     Plot an example time evolution of the Diamond system.

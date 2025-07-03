@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.diamond_lattice import DiamondLatticeSystem
+import os
 
 
 def find_convergence_time(system, dt=0.01, tolerance=1e-4, max_time=50, verbose=False):
@@ -162,19 +163,22 @@ def create_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, n_cells=15,
         print(f"  Completed! {converged_count}/{total_points} points converged")
         if max_converged_time > 0:
             print(f"  Maximum convergence time: {max_converged_time:.4f}")
-
+    
     if plot:
-        _plot_phase_diagram(gamma1_array, gamma2_array, convergence_times,
-                            converged_mask, t1, t2, t3, t4, S, dt, tolerance, max_time)
+        plot_phase_diagram(gamma1_array, gamma2_array, convergence_times,
+                            converged_mask, t1, t2, t3, t4, S, dt, tolerance, max_time, n_cells)
 
     return gamma1_array, gamma2_array, convergence_times, converged_mask
 
 
-def _plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_mask,
-                        t1, t2, t3, t4, S, dt, tolerance, max_time):
+def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_mask,
+                        t1, t2, t3, t4, S, dt, tolerance, max_time, n_cells):
     """
-    Internal function to create the phase diagram plot.
+    Internal function to create and save the phase diagram plot.
     """
+    # Create images directory if it doesn't exist
+    os.makedirs('images', exist_ok=True)
+
     # Set up color mapping
     n_colors = 50
     values = np.linspace(1, n_colors)
@@ -237,33 +241,16 @@ def _plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged
     plt.gca().spines['right'].set_visible(False)
 
     plt.tight_layout()
-    plt.show()
+
+    # Save the plot
+    filename = f"images/diamond_phases_N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+    plt.savefig(filename, dpi=300)
+    plt.close()  # Close the plot to free memory
 
 
 def plot_example_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, points=20, verbose=True):
-    """
-    Plot an example phase diagram with default parameters.
+    """Plot an example phase diagram with default parameters."""
 
-    Parameters:
-    -----------
-    t1, t2, t3, t4 : float
-        Hopping parameters
-    S : float
-        Saturation constant
-    points : int
-        Number of points along each axis
-    verbose : bool
-        Whether to print information
-
-    Returns:
-    --------
-    gamma1_array, gamma2_array : ndarray
-        Parameter arrays
-    convergence_times : ndarray
-        2D array of convergence times
-    converged_mask : ndarray
-        2D boolean array indicating convergence
-    """
     return create_phase_diagram(
         t1=t1, t2=t2, t3=t3, t4=t4, S=S, points=points, verbose=verbose
     )

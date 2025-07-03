@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import NRSSHLatticeSystem
+import os
 
 
 def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_backtrack=50,
@@ -88,12 +89,14 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_ba
     final_time = time
 
     if plot:
+        # Create images directory if it doesn't exist
+        os.makedirs('images', exist_ok=True)
+
         # Set up color mapping for backtracking plot
         values = np.linspace(1, n_backtrack)
         normalized_values = values / n_backtrack
         colormap = plt.colormaps.get_cmap('cool')  # Light blue to hot pink
         colors = colormap(normalized_values)
-
         plt.figure(figsize=(12, 8))
 
         # Plot the states leading up to the final by evolving backwards
@@ -104,14 +107,11 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_ba
 
             plt.plot(x, np.abs(phi_plot) ** 2, c=colors[color_index],
                      zorder=zorder, alpha=0.8)
-
+            
             # Evolve backwards (skip on last iteration)
             if i < n_backtrack - 1:
-                # Get Hamiltonian for current state
                 H = system.get_hamiltonian(phi_plot, onsite=0.0)
                 U_op = system.time_evolution_operator(H, dt)
-
-                # Evolve backwards using inverse of U
                 try:
                     phi_plot = np.dot(np.linalg.inv(U_op), phi_plot)
                 except np.linalg.LinAlgError:
@@ -128,6 +128,7 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_ba
         plt.gca().spines['top'].set_visible(False)
         plt.grid(True, alpha=0.3)
 
+
         # Legend
         legend_elements = [
             plt.Line2D([0], [0], color='#FF00FF',
@@ -136,32 +137,21 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_ba
                        label=f'{round(final_time - n_backtrack * dt, 2)}')
         ]
         plt.legend(handles=legend_elements)
-        plt.show()
 
-    return final_phi, final_time, converged
+        # Generate filename using system parameters
+        filename = (f"images/nrssh_last_moments_n_cells={system.n_cells}_v={system.v}_u={system.u}_"
+                    f"r={system.r}_gamma1={system.gamma1}_gamma2={system.gamma2}_S={system.S}.png")
+        plt.savefig(filename, dpi=300)
+        plt.close()
+
+        if verbose:
+            print(f"Plot saved to {filename}")
 
 
 def plot_example_final_state(n_cells=40, v=0.2, u=0.5, r=0.9, gamma1=0.5, gamma2=0.2, S=1.0,
                              dt=0.01, tolerance=1e-4, max_time=50, verbose=True):
     """
     Plot an example final state evolution of the NRSSH system.
-
-    Parameters:
-    -----------
-    n_cells : int
-        Number of unit cells
-    v, u, r : float
-        Hopping parameters
-    gamma1, gamma2, S : float
-        Gain/loss parameters
-    dt : float
-        Time step
-    tolerance : float
-        Convergence tolerance
-    max_time : float
-        Maximum evolution time
-    verbose : bool
-        Whether to print system information
 
     Returns:
     --------

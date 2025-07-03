@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.diamond_lattice import DiamondLatticeSystem
+import os
 
 
 def find_and_plot_final_state(system, t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, dt=0.01, tolerance=1e-4, max_time=50, n_backtrack=50,
@@ -88,12 +89,14 @@ def find_and_plot_final_state(system, t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, dt=
     final_time = time
 
     if plot:
+        # Create images directory if it doesn't exist
+        os.makedirs('images', exist_ok=True)
+
         # Set up color mapping for backtracking plot
         values = np.linspace(1, n_backtrack)
         normalized_values = values / n_backtrack
         colormap = plt.colormaps.get_cmap('cool')  # Light blue to hot pink
         colors = colormap(normalized_values)
-
         plt.figure(figsize=(12, 8))
 
         # Plot the states leading up to the final by evolving backwards
@@ -107,11 +110,8 @@ def find_and_plot_final_state(system, t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, dt=
 
             # Evolve backwards (skip on last iteration)
             if i < n_backtrack - 1:
-                # Get Hamiltonian for current state
                 H = system.get_hamiltonian(phi_plot, onsite=0.0)
                 U_op = system.time_evolution_operator(H, dt)
-
-                # Evolve backwards using inverse of U
                 try:
                     phi_plot = np.dot(np.linalg.inv(U_op), phi_plot)
                 except np.linalg.LinAlgError:
@@ -138,7 +138,15 @@ def find_and_plot_final_state(system, t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, dt=
                        label=f'{round(final_time - n_backtrack * dt, 2)}')
         ]
         plt.legend(handles=legend_elements)
-        plt.show()
+
+        # Save the plot with requested filename format
+        filename = (f"images/diamond_last_moments_N={3 * system.n_cells + 1}_S={S}_"
+                    f"t1={t1}_t2={t2}_t3={t3}_t4={t4}.png")
+        plt.savefig(filename, dpi=300)
+        plt.close()
+
+        if verbose:
+            print(f"Plot saved to {filename}")
 
     return final_phi, final_time, converged
 
@@ -147,23 +155,6 @@ def plot_example_final_state(n_cells=15, t1=0.5, t2=0.1, t3=0.1, t4=0.5, gamma1=
                              dt=0.1, tolerance=1e-3, max_time=100, verbose=True):
     """
     Plot an example final state evolution of the Diamond system.
-
-    Parameters:
-    -----------
-    n_cells : int
-        Number of unit cells
-    t1, t2, t3, t4 : float
-        Hopping parameters
-    gamma1, gamma2, S : float
-        Gain/loss parameters
-    dt : float
-        Time step
-    tolerance : float
-        Convergence tolerance
-    max_time : float
-        Maximum evolution time
-    verbose : bool
-        Whether to print system information
 
     Returns:
     --------

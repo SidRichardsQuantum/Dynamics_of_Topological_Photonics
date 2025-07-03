@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import NRSSHLatticeSystem
+import os
 
 
-def evolve_and_plot(system, dt, total_time, plot_interval=None):
+def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
     """
-    Evolve the system and plot the wavefunction intensity over time.
+    Evolve the system and save the wavefunction intensity plot over time.
 
     Parameters:
     -----------
@@ -17,7 +18,12 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None):
         Total evolution time
     plot_interval : int, optional
         Plot every nth step (if None, plots based on available colors)
+    verbose : bool
+        Whether to print save path
     """
+    # Create images directory if it doesn't exist
+    os.makedirs('images', exist_ok=True)
+
     N = system.N
     x = np.linspace(1, N, N)  # Mimics real-space
 
@@ -50,13 +56,8 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None):
 
         # Evolve the system (skip on last step)
         if step < n_steps:
-            # Get current Hamiltonian with nonlinear terms
             H = system.get_hamiltonian(phi, onsite=0.0)
-
-            # Get time evolution operator
             U_op = system.time_evolution_operator(H, dt)
-
-            # Evolve the wavefunction
             phi = np.dot(U_op, phi)
             time += dt
 
@@ -64,13 +65,21 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None):
     plt.xlabel('Site-Index')
     plt.ylabel('Intensity')
     legend_elements = [
-        plt.Line2D([0], [0], color='#00FFFF', label='Start = '+str(round(time - n_steps * dt, 2))+''),
-        plt.Line2D([0], [0], color='#FF00FF', label='Finish = '+str(round(time, 2))+'')
+        plt.Line2D([0], [0], color='#00FFFF', label='Start = ' + str(round(time - n_steps * dt, 2))),
+        plt.Line2D([0], [0], color='#FF00FF', label='Finish = ' + str(round(time, 2)))
     ]
     plt.legend(handles=legend_elements)
     plt.title('2nd-Order Evolution of the NRSSH Model')
     plt.grid(True, alpha=0.3)
-    plt.show()
+
+    # Generate filename
+    filename = (f"images/nrssh_first_moments_n_cells={system.n_cells}_v={system.v}_u={system.u}_"
+                f"r={system.r}_gamma1={system.gamma1}_gamma2={system.gamma2}_S={system.S}.png")
+    plt.savefig(filename, dpi=300)
+    plt.close()
+
+    if verbose:
+        print(f"Plot saved to {filename}")
 
     return phi  # Return final wavefunction
 
@@ -79,21 +88,6 @@ def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0
                            dt=0.1, total_time=None, verbose=True):
     """
     Plot an example time evolution of the NRSSH system.
-
-    Parameters:
-    -----------
-    n_cells : int
-        Number of unit cells
-    v, u, r : float
-        Hopping parameters
-    gamma1, gamma2, S : float
-        Gain/loss parameters
-    dt : float
-        Time step
-    total_time : float, optional
-        Total evolution time (default: 49*dt for 50 colors)
-    verbose : bool
-        Whether to print system information
 
     Returns:
     --------

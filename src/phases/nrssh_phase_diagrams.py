@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import NRSSHLatticeSystem
+import os
 
 
 def find_convergence_time(system, dt=0.015, tolerance=1e-4, max_time=10, verbose=False):
@@ -163,17 +164,21 @@ def create_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, n_cells=40,
             print(f"  Maximum convergence time: {max_converged_time:.4f}")
 
     if plot:
-        _plot_phase_diagram(gamma1_array, gamma2_array, convergence_times,
-                            converged_mask, v, u, r, S, dt, tolerance, max_time)
+        plot_phase_diagram(gamma1_array, gamma2_array, convergence_times,
+                           converged_mask, v, u, r, S, dt, tolerance, max_time, n_cells)
+
 
     return gamma1_array, gamma2_array, convergence_times, converged_mask
 
 
-def _plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_mask,
-                        v, u, r, S, dt, tolerance, max_time):
+def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_mask,
+                        v, u, r, S, dt, tolerance, max_time, n_cells):
     """
-    Internal function to create the phase diagram plot.
+    Internal function to create and save the phase diagram plot.
     """
+    # Create images directory if it doesn't exist
+    os.makedirs('images', exist_ok=True)
+
     # Set up color mapping
     n_colors = 50
     values = np.linspace(1, n_colors)
@@ -236,7 +241,11 @@ def _plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged
     plt.gca().spines['right'].set_visible(False)
 
     plt.tight_layout()
-    plt.show()
+
+    # Save the plot
+    filename = f"images/nrssh_phases_N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+    plt.savefig(filename, dpi=300)
+    plt.close()  # Close the plot to free memory
 
 
 def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=1.0, points=10, verbose=True):
