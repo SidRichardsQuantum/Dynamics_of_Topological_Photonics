@@ -3,43 +3,12 @@
 This repository contains a revised version of the code from my dissertation at Lancaster University, developed under the supervision of Dr. Henning Schomerus. The project explores the fascinating intersection of **topology**, **nonlinear optics** and **quantum physics**, by studying edge modes and nonlinear dynamics of photonic lattices through comprehensive phase diagram analysis.
 
 ## Table of Contents
-- [Quick Start](#quick-start)⚡
-- [Why This Matters](#why-this-matters)
-- [Overview](#overview)🧠
-- [Methodology](#methodology)🔬
-- [Project Structure](#project-structure)
-- [Key Technical Achievements](key-technical-achievements)🔑
-
-## Quick Start
-
-1. **Clone the Repository**
-```bash
-git clone https://github.com/SidRichardsQuantum/Dynamics_of_Topological_Photonics.git
-cd Dynamics_of_Topological_Photonics
-```
-
-2. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-3. **Generate the Default NRSSH Phase Diagram**
-```bash
-python example_tests/nrssh_examples/nrssh_phases.py
-```
-
-4. **Generate a Custom NRSSH Phase Diagram**
-```python
-'''example_tests.nrssh_examples.nrssh_phases.py'''
-from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
-
-# v, u, r in the interval (0, 1]
-# S >= 0
-# Recommended that points are between 15 and 25
-if __name__ == "__main__":
-         gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(
-         v=0.3, u=0.2, r=0.9, S=1.0, points=20, verbose=True)
-```
+1. [Why This Matters](#why-this-matters)
+2. [Overview](#overview)🧠
+3. [Methodology](#methodology)🔬
+4. [Project Structure](#project-structure)
+5. [Quick Start](#quick-start)⚡
+6. [Key Technical Achievements](key-technical-achievements)🔑
 
 ## Why This Matters
 
@@ -118,11 +87,12 @@ Simulations are ran over 100s of parameter combinations to create **phase diagra
 Dynamics_of_Topological_Photonics/
 ├── LICENSE                               # MIT License text
 ├── README.md                             # This file
+├── THEORY.md                             # File explaining the physics behind this project
+├── RESULTS.md                            # Results, conclusions and evaluations
 ├── requirements.txt                      # Packages required to be installed
 ├── images                                # Diagrams of the lattices
 │   ├── NRSSH Model/
 │   └── Diamond Model/
-├── THEORY.md                             # File explaining the physics behind this project
 ├── src/                                  # Source code
 │   ├── models/
 │   │   ├── __init__/
@@ -153,6 +123,37 @@ Dynamics_of_Topological_Photonics/
         └── diamond_phases/               # Plots phase diagrams
 ```
 
+## Quick Start
+
+1. **Clone the Repository**
+```bash
+git clone https://github.com/SidRichardsQuantum/Dynamics_of_Topological_Photonics.git
+cd Dynamics_of_Topological_Photonics
+```
+
+2. **Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+3. **Generate the Default NRSSH Phase Diagram**
+```bash
+python example_tests/nrssh_examples/nrssh_phases.py
+```
+
+4. **Generate a Custom NRSSH Phase Diagram**
+```python
+'''example_tests.nrssh_examples.nrssh_phases.py'''
+from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
+
+# v, u, r in the interval (0, 1]
+# S >= 0
+# Recommended that points are between 15 and 25
+if __name__ == "__main__":
+         gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(
+         v=0.3, u=0.2, r=0.9, S=1.0, points=20, verbose=True)
+```
+
 ## 🔑 **Key Technical Achievements**
 
 **Temporal Criterion Development**
@@ -171,6 +172,8 @@ Dynamics_of_Topological_Photonics/
 - Confirmed applicability to quantum walks, annealing and topological quantum computing scenarios.
 
 These results provide a comprehensive framework for understanding and predicting the behavior of complex topological systems under competing gain and loss effects, with immediate applications in laser design and nonlinear optics research, and potentially in (topological) quantum computing and annealing.
+
+See [RESULTS.md](https://github.com/SidRichardsQuantum/Dynamics_of_Topological_Photonics/blob/main/RESULTS.md) for results.
 
 ---
 
