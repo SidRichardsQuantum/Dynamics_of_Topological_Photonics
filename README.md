@@ -53,6 +53,8 @@ These final state times draw out phase diagrams of gain against loss, which are 
 
 ## Methodology
 
+See [THEORY.md](THEORY.md) for a more-extensive description of the physics behind this project.
+
 ### 1. **Hamiltonian Construction**
 Hamiltonians are defined by populating the matrix entry $[i, j]$ with the hopping strength from site $j$ to $i$.  
 We compute and visualize:
@@ -173,7 +175,7 @@ if __name__ == "__main__":
 
 These results provide a comprehensive framework for understanding and predicting the behavior of complex topological systems under competing gain and loss effects, with immediate applications in laser design and nonlinear optics research, and potentially in (topological) quantum computing and annealing.
 
-See [RESULTS.md](https://github.com/SidRichardsQuantum/Dynamics_of_Topological_Photonics/blob/main/RESULTS.md) for results.
+See [RESULTS.md](RESULTS.md) for results, conclusions and evaluations.
 
 ---
 
