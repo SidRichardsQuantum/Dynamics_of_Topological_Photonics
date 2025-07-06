@@ -34,7 +34,7 @@ The classic Su-Schrieffer-Heeger (SSH) model is adapted by introducing hoppings:
 
 (Setting $v=u$ reduces the system to the SSH Model, and similarly $v=u=r$ forms the trivial tight-binding model.)
 
-![NRSSH Model](images/NRSSH%20Model.png)
+![NRSSH Model](images/lattice_structures/nrssh.png)
 
 #### **NRSSH Hamiltonian:**
 
@@ -50,7 +50,7 @@ $H = \Sigma_i (v|2i⟩⟨2i+1| + u|2i+1⟩⟨2i| + r(|2i+1⟩⟨2i+2| + |2i+2⟩
 - **Inter-cell A-C hopping**: $t_4$
 - **Onsite potential**: $\epsilon$
 
-![Diamond Model](images/Diamond%20Model.png)
+![Diamond Model](images/lattice_structures/diamond.png)
 
 #### **Dimerizations:**
 - Facing: $t_1=t_4$ and $t_2=t_3$
@@ -142,7 +142,7 @@ Other phases host localised edge states, which have eigenenergies within the ban
 **2nd-Order Transitions**: Continuous / smooth changes.
 **Critical Points**: Where transitions change from the 1st to 2nd-order.
 
-## Realisations
+## Primary Realisations
 
 **Gain Saturation**: Prominent in laser gain media, and could parameterise high signal inputs because a medium's available energy is finite.
 **Loss Mechanisms**: General energy dissipation and other lossy effects such as scattering.

@@ -242,12 +242,12 @@ def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_
     plt.tight_layout()
 
     if v == u == r:
-        filename = f"images/nrssh_phases/tb_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+        filename = f"images/phases/nrssh_phases/tb_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
         breakpoint
     elif v == u:
-        filename = f"images/nrssh_phases/ssh_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+        filename = f"images/phases/nrssh_phases/ssh_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
     else:
-        filename = f"images/nrssh_phases/nrssh_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+        filename = f"images/phases/nrssh_phases/nrssh_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
 
     # Save the plot
     plt.savefig(filename, dpi=300)

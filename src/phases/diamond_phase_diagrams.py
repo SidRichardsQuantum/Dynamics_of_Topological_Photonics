@@ -242,16 +242,16 @@ def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_
     plt.tight_layout()
 
     if t1 == t2 == t3 == t4:
-        filename = f"images/diamond_phases/equal_hoppings/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        filename = f"images/phases/diamond_phases/equal_hoppings/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
         breakpoint
     elif t1 == t4 and t2 == t3:
-        filename = f"images/diamond_phases/facing_dimerization/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        filename = f"images/phases/diamond_phases/facing_dimerization/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
     elif t1 == t3 and t2 == t4:
-        filename = f"images/diamond_phases/neighbouring_dimerization/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        filename = f"images/phases/diamond_phases/neighbouring_dimerization/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
     elif t1 == t2 and t3 == t4:
-        filename = f"images/diamond_phases/intra_vs_inter/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        filename = f"images/phases/diamond_phases/intra_vs_inter/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
     else:
-        filename = f"images/diamond_phases/mixed_hoppings/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        filename = f"images/phases/diamond_phases/mixed_hoppings/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
     
 
     # Save the plot

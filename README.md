@@ -41,11 +41,11 @@ We study two main lattice models:
 
 1. **Non-reciprocal SSH (NRSSH) Model** - A variation of the Su–Schrieffer–Heeger model with unequal (non-reciprocal) intra-cell hopping in opposite directions.
 
-![NRSSH Model](images/NRSSH%20Model.png)
+![NRSSH Model](images/lattice_structures/nrssh.png)
 
 2. **Diamond (Rhombic) Model** - A lattice with three sites per unit cell (A, B, C). Hoppings occur between A-B and A-C but not between B and C. Different hopping configurations lead to various "dimerizations" and exotic laser phases.
 
-![Diamond Model](images/Diamond%20Model.png)
+![Diamond Model](images/lattice_structures/diamond.png)
 
 Gain and loss distribution will be different between these models, which will result in exclusive properties.
 A temporal criterion is formulated to indicate whether the systems have converged / diverged into a final state - dependent on site intensities.
@@ -93,13 +93,12 @@ Dynamics_of_Topological_Photonics/
 ├── RESULTS.md                            # Results, conclusions and evaluations
 ├── requirements.txt                      # Packages required to be installed
 ├── images/                               # Directory full of many png files from examples
-│   ├── diamond_phases/
-│   │   ├── facing_dimerization/
-│   │   ├── neighbouring_dimerization/
-│   │   ├── equal_hoppings/
-│   │   ├── intra_vs_inter/
-│   │   └── mixed_hoppings/
-│   └── nrssh_phases/
+│   ├── eigensolutions/
+│   ├── intensities/
+│   ├── lattice_structures/
+│   └── phases/
+│       ├── diamond_phases/
+│       └── nrssh_phases/
 ├── src/                                  # Source code
 │   ├── models/
 │   │   ├── __init__/
@@ -148,17 +147,17 @@ pip install -r requirements.txt
 python example_tests/nrssh_examples/nrssh_phases.py
 ```
 
-4. **Generate a Custom NRSSH Phase Diagram**
+4. **Or Generate a Custom NRSSH Phase Diagram**
 ```python
 '''example_tests.nrssh_examples.nrssh_phases.py'''
 from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
 
 # v, u, r in the interval (0, 1]
 # S >= 0
-# Recommended that points are between 15 and 25
+# Recommended that points are between 15 and 30
 if __name__ == "__main__":
          gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(
-         v=0.3, u=0.2, r=0.9, S=1.0, points=20, verbose=True)
+            v=0.3, u=0.2, r=0.9, S=1.0, points=20, verbose=True)
 ```
 
 ## 🔑 **Key Technical Achievements**
