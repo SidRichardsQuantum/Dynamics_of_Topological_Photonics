@@ -14,6 +14,7 @@ Here, the bulk-boundary correspondence is clear.
 The photons are entirely on the edges of the lattice, diminishing in intensity going further into the bulk.
 
 ![NRSSH Phase Diagram](images/phases/nrssh_phases/nrssh_model/N=40_S=1.0_v=0.9_u=0.1_r=0.1.png)
+![Unsaturated NRSSH Phase Diagram](images/phases/nrssh_phases/tb_model/N=40_S=0.0_v=0.5_u=0.5_r=0.5.png)
 
 ### NRSSH Findings
 
@@ -29,7 +30,10 @@ The photons are entirely on the edges of the lattice, diminishing in intensity g
 
 ![Diamond Eigenenergies](images/eigensolutions/diamond_eigenenergies_N=100_t1=0.2_t2=0.4_t3=0.6_t4=0.8.png)
 ![Diamond Edge State](images/eigensolutions/diamond_eigenvector_N=100_t1=0.2_t2=0.4_t3=0.6_t4=0.8.png)
+![Diamond (Equal Hoppings) Phase Diagram](images/phases/diamond_phases/equal_hoppings/N=46_S=1.0_t1=0.5_t2=0.5_t3=0.5_t4=0.5.png)
+![Diamond (Neighbouring-Dimerization) Phase Diagram](images/phases/diamond_phases/neighbouring_dimerization/N=46_S=1.0_t1=0.9_t2=0.1_t3=0.9_t4=0.1.png)
 ![Diamond (Facing-Dimerization) Phase Diagram](images/phases/diamond_phases/facing_dimerization/N=46_S=1.0_t1=0.5_t2=0.1_t3=0.1_t4=0.5.png)
+![Diamond (Intra vs Inter) Phase Diagram](images/phases/diamond_phases/intra_vs_inter/N=46_S=1.0_t1=0.5_t2=0.5_t3=0.9_t4=0.9.png)
 
 ### Diamond Findings
 
