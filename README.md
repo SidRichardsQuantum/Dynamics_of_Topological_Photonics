@@ -93,6 +93,13 @@ Dynamics_of_Topological_Photonics/
 ├── RESULTS.md                            # Results, conclusions and evaluations
 ├── requirements.txt                      # Packages required to be installed
 ├── images/                               # Directory full of many png files from examples
+│   ├── diamond_phases/
+│   │   ├── facing_dimerization/
+│   │   ├── neighbouring_dimerization/
+│   │   ├── equal_hoppings/
+│   │   ├── intra_vs_inter/
+│   │   └── mixed_hoppings/
+│   └── nrssh_phases/
 ├── src/                                  # Source code
 │   ├── models/
 │   │   ├── __init__/

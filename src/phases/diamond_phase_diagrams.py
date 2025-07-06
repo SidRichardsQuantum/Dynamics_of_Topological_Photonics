@@ -4,7 +4,7 @@ from src.models.diamond_lattice import DiamondLatticeSystem
 import os
 
 
-def find_convergence_time(system, dt=0.01, tolerance=1e-4, max_time=50, verbose=False):
+def find_convergence_time(system, dt=0.1, tolerance=1e-2, max_time=75, verbose=False):
     """
     Find the time it takes for the system to converge to a final state.
 
@@ -71,7 +71,7 @@ def find_convergence_time(system, dt=0.01, tolerance=1e-4, max_time=50, verbose=
 
 
 def create_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, n_cells=15,
-                         points=20, dt=0.1, tolerance=1e-3, max_time=100,
+                         points=20, dt=0.1, tolerance=1e-2, max_time=75,
                          plot=True, verbose=True):
     """
     Create a phase diagram showing convergence times across gamma1-gamma2 parameter space.
@@ -239,18 +239,28 @@ def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_
     # Remove top and right spines for cleaner look
     plt.gca().spines['top'].set_visible(False)
     plt.gca().spines['right'].set_visible(False)
-
     plt.tight_layout()
 
+    if t1 == t2 == t3 == t4:
+        filename = f"images/diamond_phases/equal_hoppings/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        breakpoint
+    elif t1 == t4 and t2 == t3:
+        filename = f"images/diamond_phases/facing_dimerization/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+    elif t1 == t3 and t2 == t4:
+        filename = f"images/diamond_phases/neighbouring_dimerization/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+    elif t1 == t2 and t3 == t4:
+        filename = f"images/diamond_phases/intra_vs_inter/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+    else:
+        filename = f"images/diamond_phases/mixed_hoppings/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+    
+
     # Save the plot
-    filename = f"images/diamond_phases_N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
     plt.savefig(filename, dpi=300)
     plt.close()  # Close the plot to free memory
 
 
-def plot_example_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, points=20, verbose=True):
+def plot_example_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, points=20, max_time=75, verbose=True):
     """Plot an example phase diagram with default parameters."""
 
-    return create_phase_diagram(
-        t1=t1, t2=t2, t3=t3, t4=t4, S=S, points=points, verbose=verbose
-    )
+    return create_phase_diagram(t1=t1, t2=t2, t3=t3, t4=t4, S=S,
+                                points=points, max_time=max_time, verbose=verbose)

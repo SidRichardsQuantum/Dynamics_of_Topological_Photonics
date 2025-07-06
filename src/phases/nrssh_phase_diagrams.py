@@ -4,7 +4,7 @@ from src.models.nrssh_lattice import NRSSHLatticeSystem
 import os
 
 
-def find_convergence_time(system, dt=0.015, tolerance=1e-4, max_time=10, verbose=False):
+def find_convergence_time(system, dt=0.1, tolerance=1e-2, max_time=50, verbose=False):
     """
     Find the time it takes for the system to converge to a final state.
 
@@ -71,7 +71,7 @@ def find_convergence_time(system, dt=0.015, tolerance=1e-4, max_time=10, verbose
 
 
 def create_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, n_cells=40,
-                         points=10, dt=0.015, tolerance=1e-4, max_time=10,
+                         points=10, dt=0.1, tolerance=1e-2, max_time=50,
                          plot=True, verbose=True):
     """
     Create a phase diagram showing convergence times across gamma1-gamma2 parameter space.
@@ -239,16 +239,22 @@ def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_
     # Remove top and right spines for cleaner look
     plt.gca().spines['top'].set_visible(False)
     plt.gca().spines['right'].set_visible(False)
-
     plt.tight_layout()
 
+    if v == u == r:
+        filename = f"images/nrssh_phases/tb_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+        breakpoint
+    elif v == u:
+        filename = f"images/nrssh_phases/ssh_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+    else:
+        filename = f"images/nrssh_phases/nrssh_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+
     # Save the plot
-    filename = f"images/nrssh_phases_N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
     plt.savefig(filename, dpi=300)
     plt.close()  # Close the plot to free memory
 
 
-def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=1.0, points=10, verbose=True):
+def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=1.0, points=10, max_time=50, verbose=True):
     """
     Plot an example phase diagram with default parameters.
 
@@ -273,5 +279,5 @@ def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=1.0, points=10, verbose=Tr
         2D boolean array indicating convergence
     """
     return create_phase_diagram(
-        v=v, u=u, r=r, S=S, points=points, verbose=verbose
+        v=v, u=u, r=r, S=S, points=points, max_time=max_time, verbose=verbose
     )
