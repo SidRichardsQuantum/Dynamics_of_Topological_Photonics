@@ -9,4 +9,4 @@ if __name__ == "__main__":
 
     # You can also run with custom parameters:
     # gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(
-    #     v=0.1, u=0.9, r=0.9, S=1.0, points=30, max_time=3.3, verbose=True)
+    #     v=0.3, u=0.5, r=0.7, S=1.0, points=30, max_time=175, verbose=True)

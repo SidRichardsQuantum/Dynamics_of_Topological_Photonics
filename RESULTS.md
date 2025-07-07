@@ -37,12 +37,12 @@ An unsaturated optical laser system in this unstable phase would become too inte
   <img src="images/phases/nrssh_phases/tb_model/N=40_S=0.0_v=0.5_u=0.5_r=0.5.png" alt="Unsaturated NRSSH Phase Diagram" width="600">
 </p>
 
-Below is a NRSSH system that has a chaotic phase, where final times are limited to 125 units.
+Below is a NRSSH system that has a chaotic phase, where final times are limited to 175 units.
 Points in the chaotic phases appear to take a long time to reach a final state, and there is variation in final times among these points.
 Chaotic points are highly-sensitive to initial conditions.
 Realisations of systems in this phase can be used for short-pulse lasing, since slight changes in saturation and/or hopping strengths can drastically change the laser's intensities.
 <p align="center">
-  <img src="images/phases/nrssh_phases/nrssh_model/N=40_S=1.0_v=0.1_u=0.5_r=0.9.png" alt="NRSSH Phase Diagram with Chaotic Phases" width="600">
+  <img src="images/phases/nrssh_phases/nrssh_model/N=40_S=1.0_v=0.3_u=0.5_r=0.7.png" alt="NRSSH Phase Diagram with Chaotic Phases" width="600">
 </p>
 
 ### NRSSH Findings
