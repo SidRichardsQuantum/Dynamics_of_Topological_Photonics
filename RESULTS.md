@@ -72,8 +72,8 @@ Bands still appear to form at the top and bottom, such that there is still a gap
   <img src="images/eigensolutions/diamond_eigenenergies_N=100_t1=0.2_t2=0.4_t3=0.6_t4=0.8.png" alt="Diamond Eigenenergies" width="600">
 </p>
 
-Below is the eigenstate akin to one of the onsite-energy points at $k=0$.
-
+Below is the eigenstate akin to one of the onsite-energy points at $k = 0$.
+Edge states, for either side, are both present at $k = 0$ simultaneously.
 
 <p align="center">
   <img src="images/eigensolutions/diamond_eigenvector_N=100_t1=0.2_t2=0.4_t3=0.6_t4=0.8.png" alt="Diamond Edge State" width="600">
@@ -81,18 +81,32 @@ Below is the eigenstate akin to one of the onsite-energy points at $k=0$.
 
 ### Phase Diagrams
 
+When all hopping strengths are equal for the diamond model, its properties are trivial.
+Unlike the NRSSH model, the 1st-order phase transition line between the lossy and unstable phases are not linear.
+This is because there are twice as many lossy sites (B and C) than gain sites (A).
+We have still included the line $\gamma_1 = (1 + S)\gamma_2$ as a visual gauge for the saturation $S$.
 
 <p align="center">
   <img src="images/phases/diamond_phases/equal_hoppings/N=46_S=1.0_t1=0.5_t2=0.5_t3=0.5_t4=0.5.png" alt="Diamond (Equal Hoppings) Phase Diagram" width="600">
 </p>
 
+For diamond models with neighbouring-dimerization, the behaviour is closer to that of the TB model's.
+This is expected when visualising the chain, as a neighbour-dimerized diamond lattice then (practically) resembles two TB chains weakly-coupled at the A-sites if $t_1 >> t_2$ (or vice versa).
+
 <p align="center">
   <img src="images/phases/diamond_phases/neighbouring_dimerization/N=46_S=1.0_t1=0.9_t2=0.1_t3=0.9_t4=0.1.png" alt="Diamond (Neighbouring-Dimerization) Phase Diagram" width="600">
 </p>
 
+Face-dimerized diamond models are the most interesting, becsuse they exhibit stable topological phases that take a lot longer to stablize.
+Phase transitions between this stable phase and the lossy phase are generally of the 1st-order.
+However, it is possible to tune the hopping strengths such that a critical point can be seen in our diagram.
+At this critical point, the phase transition gap diminishes and the transition becomes of the 2nd-order.
+
 <p align="center">
   <img src="images/phases/diamond_phases/facing_dimerization/N=46_S=1.0_t1=0.5_t2=0.1_t3=0.1_t4=0.5.png" alt="Diamond (Facing-Dimerization) Phase Diagram" width="600">
 </p>
+
+When the intra-cell hopping strengths are equal to each other, but different to the equal inter-cell's - the system behaviour practically resembles two identical SSH models coupled at the A-sites.
 
 <p align="center">
   <img src="images/phases/diamond_phases/intra_vs_inter/N=46_S=1.0_t1=0.5_t2=0.5_t3=0.9_t4=0.9.png" alt="Diamond (Intra vs Inter) Phase Diagram" width="600">
