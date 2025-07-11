@@ -73,7 +73,7 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
     plt.grid(True, alpha=0.3)
 
     # Save the plot
-    filename = (f"images/diamond_first_moments_N={3 * system.n_cells + 1}_S={system.S}_"
+    filename = (f"images/intensities/diamond_first_moments_N={3 * system.n_cells + 1}_S={system.S}_"
                 f"t1={system.t1}_t2={system.t2}_t3={system.t3}_t4={system.t4}.png")
     plt.savefig(filename, dpi=300)
     plt.close()

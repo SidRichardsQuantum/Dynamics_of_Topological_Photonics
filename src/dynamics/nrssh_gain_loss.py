@@ -4,7 +4,7 @@ from src.models.nrssh_lattice import NRSSHLatticeSystem
 import os
 
 
-def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_backtrack=50,
+def find_and_plot_final_state(system, v, u, r, gamma1=0.5, gamma2=0.2, dt=0.01, tolerance=1e-3, max_time=50, n_backtrack=50,
                               plot=True, verbose=True):
     """
     Find the final state of the system and plot the evolution leading to it.
@@ -128,7 +128,6 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_ba
         plt.gca().spines['top'].set_visible(False)
         plt.grid(True, alpha=0.3)
 
-
         # Legend
         legend_elements = [
             plt.Line2D([0], [0], color='#FF00FF',
@@ -139,13 +138,14 @@ def find_and_plot_final_state(system, dt=0.01, tolerance=1e-3, max_time=50, n_ba
         plt.legend(handles=legend_elements)
 
         # Generate filename using system parameters
-        filename = (f"images/nrssh_last_moments_n_cells={system.n_cells}_v={system.v}_u={system.u}_"
-                    f"r={system.r}_gamma1={system.gamma1}_gamma2={system.gamma2}_S={system.S}.png")
+        filename = (f"images/intensities/nrssh_last_moments_n_cells={system.n_cells}_v={v}_u={u}_"
+                    f"r={r}_S={system.S}_gamma1={gamma1}_gamma2={gamma2}.png")
         plt.savefig(filename, dpi=300)
         plt.close()
 
         if verbose:
             print(f"Plot saved to {filename}")
+    return final_phi, final_time, converged
 
 
 def plot_example_final_state(n_cells=40, v=0.2, u=0.5, r=0.9, gamma1=0.5, gamma2=0.2, S=1.0,
@@ -186,7 +186,7 @@ def plot_example_final_state(n_cells=40, v=0.2, u=0.5, r=0.9, gamma1=0.5, gamma2
 
     # Find and plot final state
     final_phi, final_time, converged = find_and_plot_final_state(
-        system, dt=dt, tolerance=tolerance, max_time=max_time, verbose=verbose
+        system, v=v, u=u, r=r, gamma1=gamma1, gamma2=gamma2, dt=dt, tolerance=tolerance, max_time=max_time, verbose=verbose
     )
 
     if verbose:

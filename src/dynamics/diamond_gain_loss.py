@@ -4,7 +4,7 @@ from src.models.diamond_lattice import DiamondLatticeSystem
 import os
 
 
-def find_and_plot_final_state(system, t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, dt=0.01, tolerance=1e-4, max_time=50, n_backtrack=50,
+def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=0.1, tolerance=1e-3, max_time=50, n_backtrack=50,
                               plot=True, verbose=True):
     """
     Find the final state of the system and plot the evolution leading to it.
@@ -140,8 +140,8 @@ def find_and_plot_final_state(system, t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, dt=
         plt.legend(handles=legend_elements)
 
         # Save the plot with requested filename format
-        filename = (f"images/diamond_last_moments_N={3 * system.n_cells + 1}_S={S}_"
-                    f"t1={t1}_t2={t2}_t3={t3}_t4={t4}.png")
+        filename = (f"images/intensities/diamond_last_moments_N={3 * system.n_cells + 1}_S={S}_"
+                    f"t1={t1}_t2={t2}_t3={t3}_t4={t4}_gamma1={gamma1}_gamma2={gamma2}.png")
         plt.savefig(filename, dpi=300)
         plt.close()
 
@@ -151,7 +151,7 @@ def find_and_plot_final_state(system, t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, dt=
     return final_phi, final_time, converged
 
 
-def plot_example_final_state(n_cells=15, t1=0.5, t2=0.1, t3=0.1, t4=0.5, gamma1=0.9, gamma2=0.9, S=1.0,
+def plot_example_final_state(n_cells=15, t1=0.9, t2=0.5, t3=0.5, t4=0.9, gamma1=0.9, gamma2=0.8, S=1.0,
                              dt=0.1, tolerance=1e-3, max_time=100, verbose=True):
     """
     Plot an example final state evolution of the Diamond system.
@@ -191,7 +191,7 @@ def plot_example_final_state(n_cells=15, t1=0.5, t2=0.1, t3=0.1, t4=0.5, gamma1=
 
     # Find and plot final state
     final_phi, final_time, converged = find_and_plot_final_state(
-        system, dt=dt, tolerance=tolerance, max_time=max_time, verbose=verbose
+        system, t1=t1, t2=t2, t3=t3, t4=t4, gamma1=gamma1, gamma2=gamma2, dt=dt, tolerance=tolerance, max_time=max_time, verbose=verbose
     )
 
     if verbose:

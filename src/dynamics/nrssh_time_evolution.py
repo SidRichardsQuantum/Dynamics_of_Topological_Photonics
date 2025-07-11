@@ -73,7 +73,7 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
     plt.grid(True, alpha=0.3)
 
     # Generate filename
-    filename = (f"images/nrssh_first_moments_n_cells={system.n_cells}_v={system.v}_u={system.u}_"
+    filename = (f"images/intensities/nrssh_first_moments_n_cells={system.n_cells}_v={system.v}_u={system.u}_"
                 f"r={system.r}_gamma1={system.gamma1}_gamma2={system.gamma2}_S={system.S}.png")
     plt.savefig(filename, dpi=300)
     plt.close()
