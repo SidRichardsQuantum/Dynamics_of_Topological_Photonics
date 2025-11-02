@@ -1,5 +1,22 @@
 # Results
 
+## Table of Contents
+
+- [NRSSH Results](#nrssh-results)
+  - [Eigensolutions](#eigensolutions)
+  - [Phase Diagrams](#phase-diagrams)
+    - [Saturation Effects](#saturation-effects)
+    - [Chaos](#chaos)
+  - [NRSSH Findings](#nrssh-findings)
+- [Diamond Results](#diamond-results)
+  - [Eigensolutions](#eigensolutions-1)
+  - [Phase Diagrams](#phase-diagrams-1)
+    - [Trivial](#trivial)
+    - [Neighbouring-Dimerization](#neighbouring-dimerization)
+    - [Intra Vs Inter](#intra-vs-inter)
+    - [Facing-Dimerization](#facing-dimerization)
+  - [Diamond Findings](#diamond-findings)
+
 ## **NRSSH Results**
 
 ### Eigensolutions
