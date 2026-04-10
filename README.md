@@ -8,7 +8,7 @@ This repository contains a revised version of the code from my dissertation at L
 3. [Methodology](#methodology)🔬
 4. [Project Structure](#project-structure)
 5. [Quick Start](#quick-start)⚡
-6. [Key Technical Achievements](key-technical-achievements)🔑
+6. [Key Technical Achievements](#-key-technical-achievements)🔑
 
 ## Why This Matters
 
