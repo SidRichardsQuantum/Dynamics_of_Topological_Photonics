@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import NRSSHLatticeSystem
-import os
+from src.plotting import output_file
 
 
 def find_convergence_time(system, dt=0.1, tolerance=1e-2, max_time=50, verbose=False):
@@ -72,7 +72,7 @@ def find_convergence_time(system, dt=0.1, tolerance=1e-2, max_time=50, verbose=F
 
 def create_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, n_cells=40,
                          points=10, dt=0.1, tolerance=1e-2, max_time=50,
-                         plot=True, verbose=True):
+                         plot=True, verbose=True, output_dir="outputs"):
     """
     Create a phase diagram showing convergence times across gamma1-gamma2 parameter space.
 
@@ -108,6 +108,9 @@ def create_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, n_cells=40,
     converged_mask : ndarray
         2D boolean array indicating which points converged
     """
+    if points < 1:
+        raise ValueError("points must be at least 1")
+
     # Create parameter arrays
     gamma1_array = np.linspace(0, 1, points)
     gamma2_array = np.linspace(0, 1, points)
@@ -127,6 +130,7 @@ def create_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, n_cells=40,
     max_converged_time = 0
     total_points = points * points
     completed_points = 0
+    progress_interval = max(1, total_points // 10)
 
     for i, gamma1 in enumerate(gamma1_array):
         for j, gamma2 in enumerate(gamma2_array):
@@ -153,7 +157,7 @@ def create_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, n_cells=40,
                 max_converged_time = conv_time
 
             completed_points += 1
-            if verbose and completed_points % (total_points // 10) == 0:
+            if verbose and completed_points % progress_interval == 0:
                 progress = (completed_points / total_points) * 100
                 print(f"  Progress: {progress:.0f}%")
 
@@ -165,20 +169,18 @@ def create_phase_diagram(v=0.5, u=0.5, r=0.5, S=5.0, n_cells=40,
 
     if plot:
         plot_phase_diagram(gamma1_array, gamma2_array, convergence_times,
-                           converged_mask, v, u, r, S, dt, tolerance, max_time, n_cells)
+                           converged_mask, v, u, r, S, dt, tolerance, max_time, n_cells,
+                           output_dir=output_dir)
 
 
     return gamma1_array, gamma2_array, convergence_times, converged_mask
 
 
 def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_mask,
-                        v, u, r, S, dt, tolerance, max_time, n_cells):
+                        v, u, r, S, dt, tolerance, max_time, n_cells, output_dir="outputs"):
     """
     Internal function to create and save the phase diagram plot.
     """
-    # Create images directory if it doesn't exist
-    os.makedirs('images', exist_ok=True)
-
     # Set up color mapping
     n_colors = 50
     values = np.linspace(1, n_colors)
@@ -242,19 +244,27 @@ def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_
     plt.tight_layout()
 
     if v == u == r:
-        filename = f"images/phases/nrssh_phases/tb_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
-        breakpoint
+        phase_dir = "tb_model"
     elif v == u:
-        filename = f"images/phases/nrssh_phases/ssh_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+        phase_dir = "ssh_model"
     else:
-        filename = f"images/phases/nrssh_phases/nrssh_model/N={n_cells}_S={S}_v={v}_u={u}_r={r}.png"
+        phase_dir = "nrssh_model"
+
+    filename = output_file(
+        output_dir,
+        "phases",
+        "nrssh_phases",
+        phase_dir,
+        f"N={n_cells}_S={S}_v={v}_u={u}_r={r}.png",
+    )
 
     # Save the plot
     plt.savefig(filename, dpi=300)
     plt.close()  # Close the plot to free memory
 
 
-def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=1.0, points=10, max_time=50, verbose=True):
+def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=1.0, points=10, max_time=50, verbose=True,
+                               output_dir="outputs"):
     """
     Plot an example phase diagram with default parameters.
 
@@ -279,5 +289,6 @@ def plot_example_phase_diagram(v=0.5, u=0.5, r=0.5, S=1.0, points=10, max_time=5
         2D boolean array indicating convergence
     """
     return create_phase_diagram(
-        v=v, u=u, r=r, S=S, points=points, max_time=max_time, verbose=verbose
+        v=v, u=u, r=r, S=S, points=points, max_time=max_time, verbose=verbose,
+        output_dir=output_dir
     )

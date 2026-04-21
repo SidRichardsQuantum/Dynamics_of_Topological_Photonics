@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import NRSSHLatticeSystem
-import os
+from src.plotting import output_file
 
 
-def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
+def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True, output_dir="outputs"):
     """
     Evolve the system and save the wavefunction intensity plot over time.
 
@@ -21,9 +21,6 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
     verbose : bool
         Whether to print save path
     """
-    # Create images directory if it doesn't exist
-    os.makedirs('images', exist_ok=True)
-
     N = system.N
     x = np.linspace(1, N, N)  # Mimics real-space
 
@@ -73,8 +70,12 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
     plt.grid(True, alpha=0.3)
 
     # Generate filename
-    filename = (f"images/intensities/nrssh_first_moments_n_cells={system.n_cells}_v={system.v}_u={system.u}_"
-                f"r={system.r}_gamma1={system.gamma1}_gamma2={system.gamma2}_S={system.S}.png")
+    filename = output_file(
+        output_dir,
+        "intensities",
+        f"nrssh_first_moments_n_cells={system.n_cells}_v={system.v}_u={system.u}_"
+        f"r={system.r}_gamma1={system.gamma1}_gamma2={system.gamma2}_S={system.S}.png",
+    )
     plt.savefig(filename, dpi=300)
     plt.close()
 
@@ -85,7 +86,7 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
 
 
 def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0.5, S=1.0,
-                           dt=0.1, total_time=None, verbose=True):
+                           dt=0.1, total_time=None, verbose=True, output_dir="outputs"):
     """
     Plot an example time evolution of the NRSSH system.
 
@@ -128,7 +129,7 @@ def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0
         print(f"  Number of steps: {int(total_time / dt)}")
 
     # Run the evolution and plotting
-    final_phi = evolve_and_plot(system, dt, total_time)
+    final_phi = evolve_and_plot(system, dt, total_time, verbose=verbose, output_dir=output_dir)
 
     if verbose:
         # Print final state information

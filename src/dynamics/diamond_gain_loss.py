@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.diamond_lattice import DiamondLatticeSystem
-import os
+from src.plotting import output_file
 
 
 def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=0.1, tolerance=1e-3, max_time=50, n_backtrack=50,
-                              plot=True, verbose=True):
+                              plot=True, verbose=True, output_dir="outputs"):
     """
     Find the final state of the system and plot the evolution leading to it.
 
@@ -89,9 +89,6 @@ def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=
     final_time = time
 
     if plot:
-        # Create images directory if it doesn't exist
-        os.makedirs('images', exist_ok=True)
-
         # Set up color mapping for backtracking plot
         values = np.linspace(1, n_backtrack)
         normalized_values = values / n_backtrack
@@ -140,8 +137,12 @@ def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=
         plt.legend(handles=legend_elements)
 
         # Save the plot with requested filename format
-        filename = (f"images/intensities/diamond_last_moments_N={3 * system.n_cells + 1}_S={S}_"
-                    f"t1={t1}_t2={t2}_t3={t3}_t4={t4}_gamma1={gamma1}_gamma2={gamma2}.png")
+        filename = output_file(
+            output_dir,
+            "intensities",
+            f"diamond_last_moments_N={3 * system.n_cells + 1}_S={S}_"
+            f"t1={t1}_t2={t2}_t3={t3}_t4={t4}_gamma1={gamma1}_gamma2={gamma2}.png",
+        )
         plt.savefig(filename, dpi=300)
         plt.close()
 
@@ -152,7 +153,7 @@ def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=
 
 
 def plot_example_final_state(n_cells=15, t1=0.9, t2=0.5, t3=0.5, t4=0.9, gamma1=0.9, gamma2=0.8, S=1.0,
-                             dt=0.1, tolerance=1e-3, max_time=100, verbose=True):
+                             dt=0.1, tolerance=1e-3, max_time=100, verbose=True, output_dir="outputs"):
     """
     Plot an example final state evolution of the Diamond system.
 
@@ -191,7 +192,8 @@ def plot_example_final_state(n_cells=15, t1=0.9, t2=0.5, t3=0.5, t4=0.9, gamma1=
 
     # Find and plot final state
     final_phi, final_time, converged = find_and_plot_final_state(
-        system, t1=t1, t2=t2, t3=t3, t4=t4, gamma1=gamma1, gamma2=gamma2, dt=dt, tolerance=tolerance, max_time=max_time, verbose=verbose
+        system, t1=t1, t2=t2, t3=t3, t4=t4, gamma1=gamma1, gamma2=gamma2, dt=dt,
+        tolerance=tolerance, max_time=max_time, verbose=verbose, output_dir=output_dir
     )
 
     if verbose:

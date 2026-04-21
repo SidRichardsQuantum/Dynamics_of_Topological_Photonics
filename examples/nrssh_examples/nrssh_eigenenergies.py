@@ -4,7 +4,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import NRSSHLatticeSystem
+from src.plotting import output_file
 
+OUTPUT_DIR = os.environ.get("TOPOPHOTONICS_OUTPUT_DIR", "outputs")
 
 # Create the system with the same parameters
 n_cells = 50
@@ -32,8 +34,7 @@ evals = np.linalg.eigvalsh(H)
 # Create k-space array for plotting
 k = np.linspace(-np.pi, np.pi, 2 * n_cells)
 
-# Create images directory if it doesn't exist
-os.makedirs('images', exist_ok=True)
+# Generated plots go under outputs/ so tracked documentation figures stay stable.
 
 # Plot the results
 plt.figure(figsize=(8, 6))
@@ -46,7 +47,7 @@ plt.ylabel('H Eigenvalues')
 plt.grid(True, alpha=0.3)
 
 # Generate filename
-filename = f"images/nrssh_eigenenergies_N={2 * n_cells}_v={v}_u={u}_r={r}.png"
+filename = output_file(OUTPUT_DIR, "eigensolutions", f"nrssh_eigenenergies_N={2 * n_cells}_v={v}_u={u}_r={r}.png")
 plt.savefig(filename, dpi=300)
 plt.close()
 

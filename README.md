@@ -92,7 +92,7 @@ Dynamics_of_Topological_Photonics/
 ├── THEORY.md                             # File explaining the physics behind this project
 ├── RESULTS.md                            # Results, conclusions and evaluations
 ├── requirements.txt                      # Packages required to be installed
-├── images/                               # Directory full of many png files from examples
+├── images/                               # Curated figures referenced by the markdown docs
 │   ├── eigensolutions/
 │   ├── intensities/
 │   ├── lattice_structures/
@@ -101,33 +101,42 @@ Dynamics_of_Topological_Photonics/
 │       └── nrssh_phases/
 ├── src/                                  # Source code
 │   ├── models/
-│   │   ├── __init__/
-│   │   ├── nrssh_lattice/                # Builds the operators for the NRSSH model
-│   │   └── diamond_lattice/              # Builds the operators for the Diamond model
+│   │   ├── __init__.py
+│   │   ├── nrssh_lattice.py              # Builds the operators for the NRSSH model
+│   │   └── diamond_lattice.py            # Builds the operators for the Diamond model
 │   ├── dynamics/
-│   │   ├── __init__/
-│   │   ├── nrssh_time_evolution/         # Evolves the NRSSH model
-│   │   ├── nrssh_gain_loss/              # Generates the NRSSH model's final states
-│   │   ├── diamond_time_evolution/       # Evolves the Diamond model
-│   │   └── diamond_gain_loss/            # Generates the Diamond model's final states
+│   │   ├── __init__.py
+│   │   ├── nrssh_time_evolution.py       # Evolves the NRSSH model
+│   │   ├── nrssh_gain_loss.py            # Generates the NRSSH model's final states
+│   │   ├── diamond_time_evolution.py     # Evolves the Diamond model
+│   │   └── diamond_gain_loss.py          # Generates the Diamond model's final states
 │   └── phases/
-│       ├── __init__/
-│       ├── nrssh_phase_diagrams/         # Plots the NRSSH model's phase diagram
-│       └── diamond_phase_diagrams/       # Plots the Diamond model's phase diagram
-└── example_tests/                        # Examples
+│       ├── __init__.py
+│       ├── nrssh_phase_diagrams.py       # Plots the NRSSH model's phase diagram
+│       └── diamond_phase_diagrams.py     # Plots the Diamond model's phase diagram
+├── tests/                                # Automated tests
+│   └── test_models_and_phases.py
+├── outputs/                              # Generated plots from local runs (git-ignored)
+└── examples/                             # Example plotting scripts
     ├── nrssh_examples/
-    │   ├── nrssh_eigenenergies/          # Plots eigenenergies
-    │   ├── nrssh_eigenvectors/           # Plots eigenvectors
-    │   ├── nrssh_first_moments/          # Plots first states
-    │   ├── nrssh_last_moments/           # Plots final states
-    │   └── nrssh_phases/                 # Plots phase diagrams
+    │   ├── nrssh_eigenenergies.py        # Plots eigenenergies
+    │   ├── nrssh_eigenvectors.py         # Plots eigenvectors
+    │   ├── nrssh_first_moments.py        # Plots first states
+    │   ├── nrssh_last_moments.py         # Plots final states
+    │   └── nrssh_phases.py               # Plots phase diagrams
     └── diamond_examples/
-        ├── diamond_eigenenergies/        # Plots eigenenergies
-        ├── diamond_eigenvectors/         # Plots eigenvectors
-        ├── diamond_first_moments/        # Plots first states
-        ├── diamond_last_moments/         # Plots final states
-        └── diamond_phases/               # Plots phase diagrams
+        ├── diamond_eigenenergies.py      # Plots eigenenergies
+        ├── diamond_eigenvectors.py       # Plots eigenvectors
+        ├── diamond_first_moments.py      # Plots first states
+        ├── diamond_last_moments.py       # Plots final states
+        └── diamond_phases.py             # Plots phase diagrams
 ```
+
+## Generated Output Policy
+
+The `images/` directory is reserved for curated figures referenced by `README.md`, `THEORY.md`, and `RESULTS.md`.
+Example scripts and plotting utilities write new PNGs to the git-ignored `outputs/` directory by default.
+If a newly generated figure should become part of the documented results, move it deliberately from `outputs/` into `images/` and update the relevant markdown reference.
 
 ## Quick Start
 
@@ -142,14 +151,26 @@ cd Dynamics_of_Topological_Photonics
 pip install -r requirements.txt
 ```
 
-3. **Generate the Default NRSSH Phase Diagram**
+3. **Run tests**
 ```bash
-python example_tests/nrssh_examples/nrssh_phases.py
+python -m unittest discover -s tests
 ```
 
-4. **Or Generate a Custom NRSSH Phase Diagram**
+4. **Generate the Default NRSSH Phase Diagram**
+```bash
+python examples/nrssh_examples/nrssh_phases.py
+```
+Generated plots are written to `outputs/` by default. The tracked `images/` directory is reserved for curated figures used by the markdown documentation. To write example outputs somewhere else, set `TOPOPHOTONICS_OUTPUT_DIR`:
+
+```bash
+TOPOPHOTONICS_OUTPUT_DIR=/tmp/topophotonics python examples/nrssh_examples/nrssh_phases.py
+```
+
+When calling plotting functions directly, pass `output_dir="/path/to/output"` to choose the destination directory.
+
+5. **Or Generate a Custom NRSSH Phase Diagram**
 ```python
-'''example_tests.nrssh_examples.nrssh_phases.py'''
+'''examples.nrssh_examples.nrssh_phases.py'''
 from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
 
 # v, u, r in the interval (0, 1]

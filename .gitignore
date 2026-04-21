@@ -10,6 +10,9 @@ env/
 # Tooling caches
 .pytest_cache/
 .mypy_cache/
+.codex
+.codex/
+outputs/
 
 # OS/editor artifacts
 .DS_Store

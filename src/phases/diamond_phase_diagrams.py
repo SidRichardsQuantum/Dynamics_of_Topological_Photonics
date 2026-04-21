@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.diamond_lattice import DiamondLatticeSystem
-import os
+from src.plotting import output_file
 
 
 def find_convergence_time(system, dt=0.1, tolerance=1e-2, max_time=75, verbose=False):
@@ -72,7 +72,7 @@ def find_convergence_time(system, dt=0.1, tolerance=1e-2, max_time=75, verbose=F
 
 def create_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, n_cells=15,
                          points=20, dt=0.1, tolerance=1e-2, max_time=75,
-                         plot=True, verbose=True):
+                         plot=True, verbose=True, output_dir="outputs"):
     """
     Create a phase diagram showing convergence times across gamma1-gamma2 parameter space.
 
@@ -108,6 +108,9 @@ def create_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, n_cells=15,
     converged_mask : ndarray
         2D boolean array indicating which points converged
     """
+    if points < 1:
+        raise ValueError("points must be at least 1")
+
     # Create parameter arrays
     gamma1_array = np.linspace(0, 1, points)
     gamma2_array = np.linspace(0, 1, points)
@@ -127,6 +130,7 @@ def create_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, n_cells=15,
     max_converged_time = 0
     total_points = points * points
     completed_points = 0
+    progress_interval = max(1, total_points // 10)
 
     for i, gamma1 in enumerate(gamma1_array):
         for j, gamma2 in enumerate(gamma2_array):
@@ -154,7 +158,7 @@ def create_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, n_cells=15,
                 max_converged_time = conv_time
 
             completed_points += 1
-            if verbose and completed_points % (total_points // 10) == 0:
+            if verbose and completed_points % progress_interval == 0:
                 progress = (completed_points / total_points) * 100
                 print(f"  Progress: {progress:.0f}%")
 
@@ -166,19 +170,17 @@ def create_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, n_cells=15,
     
     if plot:
         plot_phase_diagram(gamma1_array, gamma2_array, convergence_times,
-                            converged_mask, t1, t2, t3, t4, S, dt, tolerance, max_time, n_cells)
+                            converged_mask, t1, t2, t3, t4, S, dt, tolerance, max_time, n_cells,
+                            output_dir=output_dir)
 
     return gamma1_array, gamma2_array, convergence_times, converged_mask
 
 
 def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_mask,
-                        t1, t2, t3, t4, S, dt, tolerance, max_time, n_cells):
+                        t1, t2, t3, t4, S, dt, tolerance, max_time, n_cells, output_dir="outputs"):
     """
     Internal function to create and save the phase diagram plot.
     """
-    # Create images directory if it doesn't exist
-    os.makedirs('images', exist_ok=True)
-
     # Set up color mapping
     n_colors = 50
     values = np.linspace(1, n_colors)
@@ -242,25 +244,33 @@ def plot_phase_diagram(gamma1_array, gamma2_array, convergence_times, converged_
     plt.tight_layout()
 
     if t1 == t2 == t3 == t4:
-        filename = f"images/phases/diamond_phases/equal_hoppings/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
-        breakpoint
+        phase_dir = "equal_hoppings"
     elif t1 == t4 and t2 == t3:
-        filename = f"images/phases/diamond_phases/facing_dimerization/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        phase_dir = "facing_dimerization"
     elif t1 == t3 and t2 == t4:
-        filename = f"images/phases/diamond_phases/neighbouring_dimerization/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        phase_dir = "neighbouring_dimerization"
     elif t1 == t2 and t3 == t4:
-        filename = f"images/phases/diamond_phases/intra_vs_inter/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+        phase_dir = "intra_vs_inter"
     else:
-        filename = f"images/phases/diamond_phases/mixed_hoppings/N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
-    
+        phase_dir = "mixed_hoppings"
+
+    filename = output_file(
+        output_dir,
+        "phases",
+        "diamond_phases",
+        phase_dir,
+        f"N={3 * n_cells + 1}_S={S}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png",
+    )
 
     # Save the plot
     plt.savefig(filename, dpi=300)
     plt.close()  # Close the plot to free memory
 
 
-def plot_example_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, points=20, max_time=75, verbose=True):
+def plot_example_phase_diagram(t1=0.5, t2=0.1, t3=0.1, t4=0.5, S=1.0, points=20, max_time=75,
+                               verbose=True, output_dir="outputs"):
     """Plot an example phase diagram with default parameters."""
 
     return create_phase_diagram(t1=t1, t2=t2, t3=t3, t4=t4, S=S,
-                                points=points, max_time=max_time, verbose=verbose)
+                                points=points, max_time=max_time, verbose=verbose,
+                                output_dir=output_dir)

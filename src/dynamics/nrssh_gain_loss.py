@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.nrssh_lattice import NRSSHLatticeSystem
-import os
+from src.plotting import output_file
 
 
 def find_and_plot_final_state(system, v, u, r, gamma1=0.5, gamma2=0.2, dt=0.01, tolerance=1e-3, max_time=50, n_backtrack=50,
-                              plot=True, verbose=True):
+                              plot=True, verbose=True, output_dir="outputs"):
     """
     Find the final state of the system and plot the evolution leading to it.
 
@@ -89,9 +89,6 @@ def find_and_plot_final_state(system, v, u, r, gamma1=0.5, gamma2=0.2, dt=0.01, 
     final_time = time
 
     if plot:
-        # Create images directory if it doesn't exist
-        os.makedirs('images', exist_ok=True)
-
         # Set up color mapping for backtracking plot
         values = np.linspace(1, n_backtrack)
         normalized_values = values / n_backtrack
@@ -138,8 +135,12 @@ def find_and_plot_final_state(system, v, u, r, gamma1=0.5, gamma2=0.2, dt=0.01, 
         plt.legend(handles=legend_elements)
 
         # Generate filename using system parameters
-        filename = (f"images/intensities/nrssh_last_moments_n_cells={system.n_cells}_v={v}_u={u}_"
-                    f"r={r}_S={system.S}_gamma1={gamma1}_gamma2={gamma2}.png")
+        filename = output_file(
+            output_dir,
+            "intensities",
+            f"nrssh_last_moments_n_cells={system.n_cells}_v={v}_u={u}_"
+            f"r={r}_S={system.S}_gamma1={gamma1}_gamma2={gamma2}.png",
+        )
         plt.savefig(filename, dpi=300)
         plt.close()
 
@@ -149,7 +150,7 @@ def find_and_plot_final_state(system, v, u, r, gamma1=0.5, gamma2=0.2, dt=0.01, 
 
 
 def plot_example_final_state(n_cells=40, v=0.2, u=0.5, r=0.9, gamma1=0.5, gamma2=0.2, S=1.0,
-                             dt=0.01, tolerance=1e-4, max_time=50, verbose=True):
+                             dt=0.01, tolerance=1e-4, max_time=50, verbose=True, output_dir="outputs"):
     """
     Plot an example final state evolution of the NRSSH system.
 
@@ -186,7 +187,8 @@ def plot_example_final_state(n_cells=40, v=0.2, u=0.5, r=0.9, gamma1=0.5, gamma2
 
     # Find and plot final state
     final_phi, final_time, converged = find_and_plot_final_state(
-        system, v=v, u=u, r=r, gamma1=gamma1, gamma2=gamma2, dt=dt, tolerance=tolerance, max_time=max_time, verbose=verbose
+        system, v=v, u=u, r=r, gamma1=gamma1, gamma2=gamma2, dt=dt, tolerance=tolerance,
+        max_time=max_time, verbose=verbose, output_dir=output_dir
     )
 
     if verbose:

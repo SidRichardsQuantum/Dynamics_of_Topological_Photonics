@@ -3,9 +3,10 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
 
+OUTPUT_DIR = os.environ.get("TOPOPHOTONICS_OUTPUT_DIR", "outputs")
 
 if __name__ == "__main__":
-    gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram()
+    gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(output_dir=OUTPUT_DIR)
 
     # You can also run with custom parameters:
     # gamma1_arr, gamma2_arr, conv_times, conv_mask = plot_example_phase_diagram(

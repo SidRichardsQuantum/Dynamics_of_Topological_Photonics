@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.diamond_lattice import DiamondLatticeSystem
-import os
+from src.plotting import output_file
 
 
-def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
+def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True, output_dir="outputs"):
     """
     Evolve the system and save the wavefunction intensity plot over time.
 
@@ -21,9 +21,6 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
     verbose : bool
         Whether to print save path
     """
-    # Create images directory if it doesn't exist
-    os.makedirs('images', exist_ok=True)
-
     N = system.N
     x = np.linspace(1, N, N)  # Mimics real-space
 
@@ -73,8 +70,12 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
     plt.grid(True, alpha=0.3)
 
     # Save the plot
-    filename = (f"images/intensities/diamond_first_moments_N={3 * system.n_cells + 1}_S={system.S}_"
-                f"t1={system.t1}_t2={system.t2}_t3={system.t3}_t4={system.t4}.png")
+    filename = output_file(
+        output_dir,
+        "intensities",
+        f"diamond_first_moments_N={3 * system.n_cells + 1}_S={system.S}_"
+        f"t1={system.t1}_t2={system.t2}_t3={system.t3}_t4={system.t4}.png",
+    )
     plt.savefig(filename, dpi=300)
     plt.close()
 
@@ -85,7 +86,7 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True):
 
 
 def plot_example_evolution(n_cells=15, t1=0.1, t2=0.4, t3=0.7, t4=0.3, gamma1=0.6, gamma2=0.5, S=1.0,
-                           dt=0.1, total_time=None, verbose=True):
+                           dt=0.1, total_time=None, verbose=True, output_dir="outputs"):
     """
     Plot an example time evolution of the Diamond system.
 
@@ -145,7 +146,7 @@ def plot_example_evolution(n_cells=15, t1=0.1, t2=0.4, t3=0.7, t4=0.3, gamma1=0.
         print(f"  Number of steps: {int(total_time / dt)}")
 
     # Run the evolution and plotting
-    final_phi = evolve_and_plot(system, dt, total_time)
+    final_phi = evolve_and_plot(system, dt, total_time, verbose=verbose, output_dir=output_dir)
 
     if verbose:
         # Print final state information

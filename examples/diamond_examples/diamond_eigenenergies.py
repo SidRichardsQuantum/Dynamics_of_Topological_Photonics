@@ -4,9 +4,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 import numpy as np
 import matplotlib.pyplot as plt
 from src.models.diamond_lattice import DiamondLatticeSystem
+from src.plotting import output_file
 
-# Create the images directory if it doesn't exist
-os.makedirs('images', exist_ok=True)
+OUTPUT_DIR = os.environ.get("TOPOPHOTONICS_OUTPUT_DIR", "outputs")
+
+# Generated plots go under outputs/ so tracked documentation figures stay stable.
 
 # System parameters
 n_cells = 33
@@ -48,7 +50,11 @@ plt.ylabel('H Eigenvalues')
 plt.grid(True, alpha=0.3)
 
 # Save the plot
-filename = f"images/diamond_eigenenergies_N={3 * n_cells + 1}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png"
+filename = output_file(
+    OUTPUT_DIR,
+    "eigensolutions",
+    f"diamond_eigenenergies_N={3 * n_cells + 1}_t1={t1}_t2={t2}_t3={t3}_t4={t4}.png",
+)
 plt.savefig(filename, dpi=300)
 plt.close()
 
