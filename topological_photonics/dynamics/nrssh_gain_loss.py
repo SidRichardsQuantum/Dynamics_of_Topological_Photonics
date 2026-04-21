@@ -1,17 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.diamond_lattice import DiamondLatticeSystem
-from src.plotting import output_file
+from topological_photonics.models.nrssh_lattice import NRSSHLatticeSystem
+from topological_photonics.plotting import output_file
 
 
-def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=0.1, tolerance=1e-3, max_time=50, n_backtrack=50,
+def find_and_plot_final_state(system, v, u, r, gamma1=0.5, gamma2=0.2, dt=0.01, tolerance=1e-3, max_time=50, n_backtrack=50,
                               plot=True, verbose=True, output_dir="outputs"):
     """
     Find the final state of the system and plot the evolution leading to it.
 
     Parameters:
     -----------
-    system : DiamondLatticeSystem
+    system : HamiltonianSystem
         The system to evolve
     dt : float
         Time step
@@ -104,7 +104,7 @@ def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=
 
             plt.plot(x, np.abs(phi_plot) ** 2, c=colors[color_index],
                      zorder=zorder, alpha=0.8)
-
+            
             # Evolve backwards (skip on last iteration)
             if i < n_backtrack - 1:
                 H = system.get_hamiltonian(phi_plot, onsite=0.0)
@@ -119,9 +119,7 @@ def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=
         # Formatting
         plt.xlabel('Site-Index')
         plt.ylabel('Intensity')
-        plt.title(f'Diamond Model Last Moments\n'
-                  f'tolerance={tolerance}, S={S}, dt={dt}\n'
-                  f't1={t1}, t2={t2}, t3={t3}, t4={t4}', fontsize=11)
+        plt.title('NRSSH Model Final States')
         plt.xticks(range(0, N + 1, 5))
         plt.xlim(1, N)
         plt.gca().spines['top'].set_visible(False)
@@ -136,26 +134,25 @@ def find_and_plot_final_state(system, t1, t2, t3, t4, gamma1, gamma2, S=1.0, dt=
         ]
         plt.legend(handles=legend_elements)
 
-        # Save the plot with requested filename format
+        # Generate filename using system parameters
         filename = output_file(
             output_dir,
             "intensities",
-            f"diamond_last_moments_N={3 * system.n_cells + 1}_S={S}_"
-            f"t1={t1}_t2={t2}_t3={t3}_t4={t4}_gamma1={gamma1}_gamma2={gamma2}.png",
+            f"nrssh_last_moments_n_cells={system.n_cells}_v={v}_u={u}_"
+            f"r={r}_S={system.S}_gamma1={gamma1}_gamma2={gamma2}.png",
         )
         plt.savefig(filename, dpi=300)
         plt.close()
 
         if verbose:
             print(f"Plot saved to {filename}")
-
     return final_phi, final_time, converged
 
 
-def plot_example_final_state(n_cells=15, t1=0.9, t2=0.5, t3=0.5, t4=0.9, gamma1=0.9, gamma2=0.8, S=1.0,
-                             dt=0.1, tolerance=1e-3, max_time=100, verbose=True, output_dir="outputs"):
+def plot_example_final_state(n_cells=40, v=0.2, u=0.5, r=0.9, gamma1=0.5, gamma2=0.2, S=1.0,
+                             dt=0.01, tolerance=1e-4, max_time=50, verbose=True, output_dir="outputs"):
     """
-    Plot an example final state evolution of the Diamond system.
+    Plot an example final state evolution of the NRSSH system.
 
     Returns:
     --------
@@ -167,12 +164,11 @@ def plot_example_final_state(n_cells=15, t1=0.9, t2=0.5, t3=0.5, t4=0.9, gamma1=
         The system object used
     """
     # Create the system
-    system = DiamondLatticeSystem(
+    system = NRSSHLatticeSystem(
         n_cells=n_cells,
-        t1=t1,  # A and B intra-cell hopping strength
-        t2=t2,  # A and C intra-cell hopping strength
-        t3=t3,  # A and B inter-cell hopping strength
-        t4=t4,  # A and C inter-cell hopping strength
+        v=v,  # Non-reciprocal forward hopping
+        u=u,  # Non-reciprocal backward hopping
+        r=r,  # Reciprocal inter-cell hopping
         gamma1=gamma1,  # Gain coefficient (0, 1]
         gamma2=gamma2,  # Loss coefficient (0, 1]
         S=S  # Saturation constant (>= 0)
@@ -182,18 +178,17 @@ def plot_example_final_state(n_cells=15, t1=0.9, t2=0.5, t3=0.5, t4=0.9, gamma1=
         print(f"System parameters:")
         print(f"  n_cells: {system.n_cells}")
         print(f"  Total sites: {system.N}")
-        print(f"  t1: {system.t1}")
-        print(f"  t2: {system.t2}")
-        print(f"  t3: {system.t3}")
-        print(f"  t4: {system.t4}")
+        print(f"  v (forward hopping): {system.v}")
+        print(f"  u (backward hopping): {system.u}")
+        print(f"  r (inter-cell hopping): {system.r}")
         print(f"  gamma1 (gain): {system.gamma1}")
         print(f"  gamma2 (loss): {system.gamma2}")
         print(f"  S (saturation): {system.S}")
 
     # Find and plot final state
     final_phi, final_time, converged = find_and_plot_final_state(
-        system, t1=t1, t2=t2, t3=t3, t4=t4, gamma1=gamma1, gamma2=gamma2, dt=dt,
-        tolerance=tolerance, max_time=max_time, verbose=verbose, output_dir=output_dir
+        system, v=v, u=u, r=r, gamma1=gamma1, gamma2=gamma2, dt=dt, tolerance=tolerance,
+        max_time=max_time, verbose=verbose, output_dir=output_dir
     )
 
     if verbose:

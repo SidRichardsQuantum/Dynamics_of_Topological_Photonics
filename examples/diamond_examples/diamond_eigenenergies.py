@@ -1,10 +1,8 @@
-import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.diamond_lattice import DiamondLatticeSystem
-from src.plotting import output_file
+from topological_photonics.models.diamond_lattice import DiamondLatticeSystem
+from topological_photonics.plotting import output_file
 
 OUTPUT_DIR = os.environ.get("TOPOPHOTONICS_OUTPUT_DIR", "outputs")
 

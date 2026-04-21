@@ -1,7 +1,5 @@
-import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from src.phases.diamond_phase_diagrams import plot_example_phase_diagram
+from topological_photonics.phases.diamond_phase_diagrams import plot_example_phase_diagram
 
 OUTPUT_DIR = os.environ.get("TOPOPHOTONICS_OUTPUT_DIR", "outputs")
 

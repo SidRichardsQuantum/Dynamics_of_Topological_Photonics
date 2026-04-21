@@ -91,6 +91,7 @@ Dynamics_of_Topological_Photonics/
 ├── README.md                             # This file
 ├── THEORY.md                             # File explaining the physics behind this project
 ├── RESULTS.md                            # Results, conclusions and evaluations
+├── pyproject.toml                        # Package metadata and install configuration
 ├── requirements.txt                      # Packages required to be installed
 ├── images/                               # Curated figures referenced by the markdown docs
 │   ├── eigensolutions/
@@ -99,7 +100,7 @@ Dynamics_of_Topological_Photonics/
 │   └── phases/
 │       ├── diamond_phases/
 │       └── nrssh_phases/
-├── src/                                  # Source code
+├── topological_photonics/                 # Source code
 │   ├── models/
 │   │   ├── __init__.py
 │   │   ├── nrssh_lattice.py              # Builds the operators for the NRSSH model
@@ -146,9 +147,9 @@ git clone https://github.com/SidRichardsQuantum/Dynamics_of_Topological_Photonic
 cd Dynamics_of_Topological_Photonics
 ```
 
-2. **Install dependencies**
+2. **Install the project**
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```
 
 3. **Run tests**
@@ -171,7 +172,7 @@ When calling plotting functions directly, pass `output_dir="/path/to/output"` to
 5. **Or Generate a Custom NRSSH Phase Diagram**
 ```python
 '''examples.nrssh_examples.nrssh_phases.py'''
-from src.phases.nrssh_phase_diagrams import plot_example_phase_diagram
+from topological_photonics.phases.nrssh_phase_diagrams import plot_example_phase_diagram
 
 # v, u, r in the interval (0, 1]
 # S >= 0

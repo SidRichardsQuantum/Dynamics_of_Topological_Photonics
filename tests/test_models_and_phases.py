@@ -7,11 +7,11 @@ import numpy as np
 
 matplotlib.use("Agg")
 
-from src.models.diamond_lattice import DiamondLatticeSystem
-from src.models.nrssh_lattice import NRSSHLatticeSystem
-from src.dynamics import diamond_gain_loss, diamond_time_evolution, nrssh_gain_loss, nrssh_time_evolution
-from src.phases import diamond_phase_diagrams, nrssh_phase_diagrams
-from src.plotting import output_file
+from topological_photonics.models.diamond_lattice import DiamondLatticeSystem
+from topological_photonics.models.nrssh_lattice import NRSSHLatticeSystem
+from topological_photonics.dynamics import diamond_gain_loss, diamond_time_evolution, nrssh_gain_loss, nrssh_time_evolution
+from topological_photonics.phases import diamond_phase_diagrams, nrssh_phase_diagrams
+from topological_photonics.plotting import output_file
 
 
 class LatticeShapeTests(unittest.TestCase):
@@ -153,6 +153,24 @@ class NumericalBehaviorTests(unittest.TestCase):
 
 
 class PhaseGridTests(unittest.TestCase):
+    def test_phase_modules_expose_find_convergence_time_api(self):
+        nrssh_system = NRSSHLatticeSystem(n_cells=2, v=0.2, u=0.5, r=0.9)
+        diamond_system = DiamondLatticeSystem(n_cells=1, t1=0.1, t2=0.2, t3=0.3, t4=0.4)
+
+        nrssh_time, nrssh_converged = nrssh_phase_diagrams.find_convergence_time(
+            nrssh_system,
+            max_time=0.1,
+        )
+        diamond_time, diamond_converged = diamond_phase_diagrams.find_convergence_time(
+            diamond_system,
+            max_time=0.1,
+        )
+
+        self.assertTrue(np.isfinite(nrssh_time))
+        self.assertTrue(np.isfinite(diamond_time))
+        self.assertIsInstance(nrssh_converged, bool)
+        self.assertIsInstance(diamond_converged, bool)
+
     def test_nrssh_phase_grid_supports_small_point_counts(self):
         gamma1, gamma2, convergence_times, converged = nrssh_phase_diagrams.create_phase_diagram(
             points=3,

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from src.models.nrssh_lattice import NRSSHLatticeSystem
-from src.plotting import output_file
+from topological_photonics.models.diamond_lattice import DiamondLatticeSystem
+from topological_photonics.plotting import output_file
 
 
 def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True, output_dir="outputs"):
@@ -10,7 +10,7 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True, ou
 
     Parameters:
     -----------
-    system : HamiltonianSystem
+    system : DiamondLatticeSystem
         The system to evolve
     dt : float
         Time step
@@ -66,15 +66,15 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True, ou
         plt.Line2D([0], [0], color='#FF00FF', label='Finish = ' + str(round(time, 2)))
     ]
     plt.legend(handles=legend_elements)
-    plt.title('2nd-Order Evolution of the NRSSH Model')
+    plt.title('2nd-Order Evolution of the Diamond Model')
     plt.grid(True, alpha=0.3)
 
-    # Generate filename
+    # Save the plot
     filename = output_file(
         output_dir,
         "intensities",
-        f"nrssh_first_moments_n_cells={system.n_cells}_v={system.v}_u={system.u}_"
-        f"r={system.r}_gamma1={system.gamma1}_gamma2={system.gamma2}_S={system.S}.png",
+        f"diamond_first_moments_N={3 * system.n_cells + 1}_S={system.S}_"
+        f"t1={system.t1}_t2={system.t2}_t3={system.t3}_t4={system.t4}.png",
     )
     plt.savefig(filename, dpi=300)
     plt.close()
@@ -85,10 +85,25 @@ def evolve_and_plot(system, dt, total_time, plot_interval=None, verbose=True, ou
     return phi  # Return final wavefunction
 
 
-def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0.5, S=1.0,
+def plot_example_evolution(n_cells=15, t1=0.1, t2=0.4, t3=0.7, t4=0.3, gamma1=0.6, gamma2=0.5, S=1.0,
                            dt=0.1, total_time=None, verbose=True, output_dir="outputs"):
     """
-    Plot an example time evolution of the NRSSH system.
+    Plot an example time evolution of the Diamond system.
+
+    Parameters:
+    -----------
+    n_cells : int
+        Number of unit cells
+    t1, t2, t3, t4 : float
+        Hopping parameters
+    gamma1, gamma2, S : float
+        Gain/loss parameters
+    dt : float
+        Time step
+    total_time : float, optional
+        Total evolution time (default: 49*dt for 50 colors)
+    verbose : bool
+        Whether to print system information
 
     Returns:
     --------
@@ -98,11 +113,12 @@ def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0
         The system object used
     """
     # Create the system
-    system = NRSSHLatticeSystem(
+    system = DiamondLatticeSystem(
         n_cells=n_cells,
-        v=v,  # Non-reciprocal forward hopping
-        u=u,  # Non-reciprocal backward hopping
-        r=r,  # Reciprocal inter-cell hopping
+        t1=t1,  # A and B intra-cell hopping strength
+        t2=t2,  # A and C intra-cell hopping strength
+        t3=t3,  # A and B inter-cell hopping strength
+        t4=t4,  # A and C inter-cell hopping strength
         gamma1=gamma1,  # Gain coefficient (0, 1]
         gamma2=gamma2,  # Loss coefficient (0, 1]
         S=S  # Saturation constant (>= 0)
@@ -117,9 +133,10 @@ def plot_example_evolution(n_cells=40, v=0.1, u=0.4, r=0.7, gamma1=0.6, gamma2=0
         print(f"System parameters:")
         print(f"  n_cells: {system.n_cells}")
         print(f"  Total sites: {system.N}")
-        print(f"  v (forward hopping): {system.v}")
-        print(f"  u (backward hopping): {system.u}")
-        print(f"  r (inter-cell hopping): {system.r}")
+        print(f"  t1: {system.t1}")
+        print(f"  t2: {system.t2}")
+        print(f"  t3: {system.t3}")
+        print(f"  t4: {system.t4}")
         print(f"  gamma1 (gain): {system.gamma1}")
         print(f"  gamma2 (loss): {system.gamma2}")
         print(f"  S (saturation): {system.S}")

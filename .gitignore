@@ -10,6 +10,7 @@ env/
 # Tooling caches
 .pytest_cache/
 .mypy_cache/
+*.egg-info/
 .codex
 .codex/
 outputs/
